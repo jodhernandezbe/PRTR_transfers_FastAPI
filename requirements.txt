@@ -1,0 +1,40 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: linux-64
+_libgcc_mutex=0.1=main
+_openmp_mutex=4.5=1_gnu
+ca-certificates=2021.5.30=ha878542_0
+certifi=2021.5.30=py39h06a4308_0
+greenlet=1.1.0=py39h2531618_0
+ld_impl_linux-64=2.36.1=hea4e1c9_0
+libblas=3.9.0=9_openblas
+libcblas=3.9.0=9_openblas
+libffi=3.3=he6710b0_2
+libgcc-ng=9.3.0=h5101ec6_17
+libgfortran-ng=9.3.0=ha5ec8a7_17
+libgfortran5=9.3.0=ha5ec8a7_17
+libgomp=9.3.0=h5101ec6_17
+liblapack=3.9.0=9_openblas
+libopenblas=0.3.15=pthreads_h8fe5266_1
+libstdcxx-ng=9.3.0=hd4cf53a_17
+ncurses=6.2=he6710b0_1
+numpy=1.21.0=py39hdbf815f_0
+openssl=1.1.1k=h27cfd23_0
+pandas=1.3.0=py39hde0f152_0
+pip=21.1.3=py39h06a4308_0
+python=3.9.5=h12debd9_4
+python-dateutil=2.8.1=pyhd3eb1b0_0
+python_abi=3.9=2_cp39
+pytz=2021.1=pyhd3eb1b0_0
+pyyaml=5.4.1=py39h27cfd23_1
+readline=8.1=h27cfd23_0
+setuptools=52.0.0=py39h06a4308_0
+six=1.16.0=pyhd3eb1b0_0
+sqlalchemy=1.4.20=py39h3811e60_0
+sqlite=3.36.0=hc218d9a_0
+tk=8.6.10=hbc83047_0
+tzdata=2021a=h52ac0ba_0
+wheel=0.36.2=pyhd3eb1b0_0
+xz=5.2.5=h7b6447c_0
+yaml=0.2.5=h7b6447c_0
+zlib=1.2.11=h7b6447c_3
