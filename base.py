@@ -7,10 +7,17 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
+Base = declarative_base()
 dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory path
 
-Engine = create_engine(f'sqlite:///{dir_path}/output/PRTR_transfers_summary.db')
+def creating_session_engine(check_same_thread=True):
+    '''
+    Function to create SQLite session and engine
+    '''
 
-Session = sessionmaker(bind=Engine)
+    Engine = create_engine(f'sqlite:///{dir_path}/output/PRTR_transfers_summary.db',
+                        connect_args={"check_same_thread": check_same_thread})
 
-Base = declarative_base()
+    Session = sessionmaker(bind=Engine, autocommit=False, autoflush=False)
+
+    return Engine, Session

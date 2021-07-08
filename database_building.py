@@ -3,7 +3,7 @@
 
 # Importing libraries
 from model import Record, GenericSubstance, GenericSector, GenericTransferClass
-from base import Session, Engine
+from base import creating_session_engine
 
 import yaml
 import os
@@ -136,6 +136,9 @@ def loading_data(dfs, logger):
     '''
     Function to load the data into the database
     '''
+
+    # Session and engine
+    Engine, Session = creating_session_engine()
 
     # Dictionary to associate each table file with each table in the SQL database
     Dic_tables = {'generic_sector': GenericSector,
