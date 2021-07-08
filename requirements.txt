@@ -1,51 +1,20 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: linux-64
-_libgcc_mutex=0.1=main
-_openmp_mutex=4.5=1_gnu
-asgiref=3.4.1=pyhd8ed1ab_0
-ca-certificates=2021.7.5=h06a4308_1
-certifi=2021.5.30=py39h06a4308_0
-click=8.0.1=pyhd3eb1b0_0
-fastapi=0.66.0=pyhd8ed1ab_0
-greenlet=1.1.0=py39h2531618_0
-h11=0.12.0=pyhd3eb1b0_0
-importlib-metadata=4.6.1=py39hf3d152e_0
-ld_impl_linux-64=2.36.1=hea4e1c9_0
-libblas=3.9.0=9_openblas
-libcblas=3.9.0=9_openblas
-libffi=3.3=he6710b0_2
-libgcc-ng=9.3.0=h5101ec6_17
-libgfortran-ng=9.3.0=ha5ec8a7_17
-libgfortran5=9.3.0=ha5ec8a7_17
-libgomp=9.3.0=h5101ec6_17
-liblapack=3.9.0=9_openblas
-libopenblas=0.3.15=pthreads_h8fe5266_1
-libstdcxx-ng=9.3.0=hd4cf53a_17
-ncurses=6.2=he6710b0_1
-numpy=1.21.0=py39hdbf815f_0
-openssl=1.1.1k=h27cfd23_0
-pandas=1.3.0=py39hde0f152_0
-pip=21.1.3=py39h06a4308_0
-pydantic=1.8.2=py39h27cfd23_0
-python=3.9.5=h12debd9_4
-python-dateutil=2.8.1=pyhd3eb1b0_0
-python_abi=3.9=2_cp39
-pytz=2021.1=pyhd3eb1b0_0
-pyyaml=5.4.1=py39h27cfd23_1
-readline=8.1=h27cfd23_0
-setuptools=52.0.0=py39h06a4308_0
-six=1.16.0=pyhd3eb1b0_0
-sqlalchemy=1.4.20=py39h3811e60_0
-sqlite=3.36.0=hc218d9a_0
-starlette=0.14.2=pyhd8ed1ab_0
-tk=8.6.10=hbc83047_0
-typing-extensions=3.10.0.0=hd3eb1b0_0
-typing_extensions=3.10.0.0=pyh06a4308_0
-tzdata=2021a=h52ac0ba_0
-uvicorn=0.14.0=py39hf3d152e_0
-wheel=0.36.2=pyhd3eb1b0_0
-xz=5.2.5=h7b6447c_0
-yaml=0.2.5=h7b6447c_0
-zipp=3.5.0=pyhd3eb1b0_0
-zlib=1.2.11=h7b6447c_3
+asgiref @ file:///home/conda/feedstock_root/build_artifacts/asgiref_1625395912402/work
+certifi==2021.5.30
+click @ file:///tmp/build/80754af9/click_1621604852318/work
+fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1625445291150/work
+greenlet @ file:///tmp/build/80754af9/greenlet_1620913645007/work
+h11 @ file:///tmp/build/80754af9/h11_1620423447028/work
+importlib-metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1625463717820/work
+numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1624399860541/work
+pandas==1.3.0
+pydantic @ file:///tmp/build/80754af9/pydantic_1621542220335/work
+pyspark==2.4.7
+python-dateutil @ file:///home/ktietz/src/ci/python-dateutil_1611928101742/work
+pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
+PyYAML==5.4.1
+six @ file:///tmp/build/80754af9/six_1623709665295/work
+SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/sqlalchemy_1624920386079/work
+starlette @ file:///home/conda/feedstock_root/build_artifacts/starlette-recipe_1612371539619/work
+typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1624965014186/work
+uvicorn @ file:///home/conda/feedstock_root/build_artifacts/uvicorn_1622576281703/work
+zipp @ file:///tmp/build/80754af9/zipp_1625570634446/work
