@@ -43,29 +43,3 @@ class RecordRequestInequalityModel(BaseModel):
 
     class Config:
         orm_mode = True
-
-
-class SectorResponseModel(BaseModel) :
-    generic_sector_code : int
-    generic_sector_name: str
-
-    class Config:
-        orm_mode = True
-
-
-class TransferClassResponseModel(BaseModel) :
-    generic_transfer_class_id : str
-    generic_transfer_class_name: str
-    transfer_class_wm_hierarchy_name : str
-
-    class Config:
-        orm_mode = True
-
-
-class SubstanceResponseModel(BaseModel) :
-    generic_substance_id : str
-    generic_substance_name: str
-    cas_number: str
-
-    class Config:
-        orm_mode = True

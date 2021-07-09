@@ -6,15 +6,13 @@ from base import creating_session_engine
 import model
 from query import (get_records, get_records_by_conditions, get_sectors,
                     get_substances, get_transfer_classes)
-from schema import (RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel,
-                    SectorResponseModel, SubstanceResponseModel, TransferClassResponseModel)
+from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
 
 from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 import uvicorn
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse, StreamingResponse
-import io
+from fastapi.responses import JSONResponse, HTMLResponse
 
 
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
@@ -34,47 +32,42 @@ def get_db():
 
 @app.get('/sectors/',
         summary='Generic industry sectors in the PRTR_transfers_summary database',
-        response_model=SectorResponseModel,
-        response_class = StreamingResponse,
-        responses = {200: {'description': 'CSV file with generic industry sectors',
-                            'content': {'text/csv': {}}}})
+        response_class = HTMLResponse,
+        responses = {200: {'description': 'HTML table with generic industry sectors',
+                            'content': {'text/html': {}}}}
+        )
 def get_sector_records(db: Session = Depends(get_db)):
 
     records = get_sectors(db)
-    csv_name = 'generic_industry_sector.csv'
+    html = records.to_html()
 
-    return saving_files(csv_name,
-                    records)
+    return html
 
 
 @app.get('/substances/',
         summary='Generic substances in the PRTR_transfers_summary database',
-        response_model=SubstanceResponseModel,
-        response_class = StreamingResponse,
-        responses = {200: {'description': 'CSV file with generic substances',
-                            'content': {'text/csv': {}}}})
+        response_class = HTMLResponse,
+        responses = {200: {'description': 'HTML table with generic substances',
+                            'content': {'text/html': {}}}})
 def get_substance_records(db: Session = Depends(get_db)):
 
     records = get_substances(db)
-    csv_name = 'generic_substance.csv'
+    html = records.to_html()
 
-    return saving_files(csv_name,
-                    records)
+    return html
 
 
 @app.get('/transfer_classes/',
         summary='Generic transfer classes in the PRTR_transfers_summary database',
-        response_model=TransferClassResponseModel,
-        response_class = StreamingResponse,
-        responses = {200: {'description': 'CSV file with generic transfer classes',
-                            'content': {'text/csv': {}}}})
+        response_class = HTMLResponse,
+        responses = {200: {'description': 'HTML table with generic transfer classes',
+                            'content': {'text/html': {}}}})
 def get_transfer_class_records(db: Session = Depends(get_db)):
 
     records = get_transfer_classes(db)
-    csv_name = 'generic_transfer_class.csv'
+    html = records.to_html()
 
-    return saving_files(csv_name,
-                    records)
+    return html
 
 
 @app.post('/records/',
@@ -215,24 +208,6 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     json_compatible_item_data = jsonable_encoder(records)
     
     return JSONResponse(content=json_compatible_item_data)
-
-
-def saving_files(filename, records):
-    '''
-    Function to get the .csv file from queries
-    '''
-
-
-    stream = io.StringIO()
-    
-    records.to_csv(stream, index = False)
-    
-    response = StreamingResponse(iter([stream.getvalue()]),
-                                 media_type='text/csv',
-                                 headers={'Content-Disposition': f'attachment; filename={filename}'}
-       )
-
-    return response
 
 
 if __name__ == "__main__":
