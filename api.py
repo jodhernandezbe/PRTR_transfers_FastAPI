@@ -32,7 +32,30 @@ def get_db():
 @app.post('/records/',
         summary='PRTR transfers summary data',
         response_model=RecordResponseModel,
-        response_model_exclude={'record_id'})
+        response_model_exclude={'record_id'},
+        responses = {
+                    200: {'description': 'JSON output obtained based on user input parameter(s)',
+                        'content': {
+                                    'application/json': {
+                                        'example': {
+                                            "reporting_year": 2013,
+                                            "country": "AUS",
+                                            "generic_substance_id": "64175",
+                                            "generic_sector_code": 10,
+                                            "generic_transfer_class_id": "M7",
+                                            "number_of_facilities": 91,
+                                            "total_transfer_amount_kg": 9577900.5,
+                                            "average_transfer_amount_kg": 105251.65,
+                                            "median_transfer_amount_kg": 12576.8,
+                                            "std_transfer_amount_kg": 435590.29,
+                                            "max_transfer_amount_kg": 3845510.0,
+                                            "min_transfer_amount_kg": 81.0
+                                                    }
+                                                        }
+                                    }
+                        }
+                    }
+        )
 def read_record(record_request: RecordRequestModel = Body(...,
                 examples={'example_1': {'summary': 'All parameters',
                                     'description': 'A query with all parameters specified by the user',
@@ -81,7 +104,30 @@ def read_record(record_request: RecordRequestModel = Body(...,
 @app.post('/conditional_records/',
         summary='PRTR transfers summary data based on conditions',
         response_model=RecordResponseModel,
-        response_model_exclude={'record_id'})
+        response_model_exclude={'record_id'},
+        responses = {
+                    200: {'description': 'JSON output obtained based on user input parameter(s)',
+                        'content': {
+                                    'application/json': {
+                                        'example': {
+                                            "reporting_year": 2019,
+                                            "country": "CAN",
+                                            "generic_substance_id": "98828",
+                                            "generic_sector_code": 46,
+                                            "generic_transfer_class_id": "M7",
+                                            "number_of_facilities": 3,
+                                            "total_transfer_amount_kg": 12594.84,
+                                            "average_transfer_amount_kg": 4198.28,
+                                            "median_transfer_amount_kg": 1.6,
+                                            "std_transfer_amount_kg": 7270.13,
+                                            "max_transfer_amount_kg": 12593.1,
+                                            "min_transfer_amount_kg": 0.14
+                                                    }
+                                                        }
+                                    }
+                        }
+                    }
+        )
 def read_record_with_condition(record_request: RecordRequestInequalityModel = Body(...,
                                 examples={'example_1': {'summary': 'Chemical and total quantity',
                                                         'description': 'A query with a chemical and a condition on the total transfer quantity specified by the user',
