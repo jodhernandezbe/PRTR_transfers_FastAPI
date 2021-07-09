@@ -25,7 +25,3 @@ https://prtr-transfers-summary.herokuapp.com/docs
   <li>You can see the generic substances list in https://prtr-transfers-summary.herokuapp.com/substances/</li>
   <li>You can see the generic transfer classes list in https://prtr-transfers-summary.herokuapp.com/transfer_classes/</li>
 </ul>
-
-## Local deployment
-
-## Usage example
