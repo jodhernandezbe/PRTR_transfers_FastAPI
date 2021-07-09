@@ -8,6 +8,10 @@
 
 ## Remote deployment
 
+This API was deployed at Heroku where you can also test it from the docs endpoint
+
+https://prtr-transfers-summary.herokuapp.com/docs
+
 ## Local deployment
 
 ## Usage example
