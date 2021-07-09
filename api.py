@@ -4,17 +4,18 @@
 # Importing libraries
 from base import creating_session_engine
 import model
-from query import (get_records, get_records_by_conditions, get_sectors,
-                    get_substances, get_transfer_classes)
+from query import get_records, get_records_by_conditions
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
 
-from fastapi import FastAPI, Depends, HTTPException, Body
+from fastapi import FastAPI, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
 import uvicorn
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 
+templates = Jinja2Templates(directory="templates")
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 model.Base.metadata.create_all(bind=Engine)
 app = FastAPI(title='PRTR transfers summary data',
@@ -36,12 +37,8 @@ def get_db():
         responses = {200: {'description': 'HTML table with generic industry sectors',
                             'content': {'text/html': {}}}}
         )
-def get_sector_records(db: Session = Depends(get_db)):
-
-    records = get_sectors(db)
-    html = records.to_html()
-
-    return html
+def get_sector_records(request: Request):    
+    return templates.TemplateResponse("generic_sector.html", {"request": request})
 
 
 @app.get('/substances/',
@@ -49,12 +46,8 @@ def get_sector_records(db: Session = Depends(get_db)):
         response_class = HTMLResponse,
         responses = {200: {'description': 'HTML table with generic substances',
                             'content': {'text/html': {}}}})
-def get_substance_records(db: Session = Depends(get_db)):
-
-    records = get_substances(db)
-    html = records.to_html()
-
-    return html
+def get_substance_records(request: Request):
+    return templates.TemplateResponse("generic_substance.html", {"request": request})
 
 
 @app.get('/transfer_classes/',
@@ -62,12 +55,8 @@ def get_substance_records(db: Session = Depends(get_db)):
         response_class = HTMLResponse,
         responses = {200: {'description': 'HTML table with generic transfer classes',
                             'content': {'text/html': {}}}})
-def get_transfer_class_records(db: Session = Depends(get_db)):
-
-    records = get_transfer_classes(db)
-    html = records.to_html()
-
-    return html
+def get_transfer_class_records(request: Request):
+    return templates.TemplateResponse("generic_transfer_class.html", {"request": request})
 
 
 @app.post('/records/',

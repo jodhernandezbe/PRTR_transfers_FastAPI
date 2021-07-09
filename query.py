@@ -2,13 +2,10 @@
 # -*- coding: utf-8 -*-
 
 # Importing libraries
-from model import Record, GenericSubstance, GenericSector, GenericTransferClass
+from model import Record
 
 from sqlalchemy.orm import Session
-from sqlalchemy.inspection import inspect
 import re
-from collections import defaultdict
-import pandas as pd
 
 
 def get_records(db: Session, fields):
@@ -63,54 +60,6 @@ def get_records_by_conditions(db: Session, fields):
     
     return results
 
-
-def get_substances(db: Session):
-    '''
-    Function to get all the substances
-    '''
-
-    results = db.query(GenericSubstance).all()
-    results = pd.DataFrame(query_to_dict(results))
-    results.drop(columns=['records'], inplace=True)
-
-    return results
-
-
-def get_sectors(db: Session):
-    '''
-    Function to get all the industry sectors
-    '''
-
-    results = db.query(GenericSector).all()
-    results = pd.DataFrame(query_to_dict(results))
-    results.drop(columns=['records'], inplace=True)
-
-    return results
-
-
-def get_transfer_classes(db: Session):
-    '''
-    Function to get all the transfer classes
-    '''
-
-    results = db.query(GenericTransferClass).all()
-    results = pd.DataFrame(query_to_dict(results))
-    results.drop(columns=['records'], inplace=True)
-
-    return results
-
-
-def query_to_dict(rset):
-    '''
-    Function to convert the query to dicts
-    '''
-
-    result = defaultdict(list)
-    for obj in rset:
-        instance = inspect(obj)
-        for key, x in instance.attrs.items():
-            result[key].append(x.value)
-    return result
 
 
 
