@@ -54,7 +54,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
                                             }
                                         },
                         'example_3': {'summary': 'Excluding many parameters',
-                                    'description': 'A query with one parameter excluded by the user',
+                                    'description': 'A query with many parameters excluded by the user',
                                     'value': {
                                         'country': 'CAN'
                                             }
@@ -91,14 +91,14 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
                                                                 }
                                                         },
                                         'example_2': {'summary': 'Sector and max quantity',
-                                                    'description': 'A query with one an industry sector and a condition on the maximum transfer quantity excluded by the user',
+                                                    'description': 'A query with an industry sector and a condition on the maximum transfer quantity specified by the user',
                                                     'value': {
                                                         'generic_sector_code': 24,
                                                         'max_transfer_amount_kg': '>= 10000'
                                                             }
                                                         },
                                         'example_3': {'summary': 'Only a summary quantity',
-                                                    'description': 'A query with only a condition on a summary quantity specified by the user',
+                                                    'description': 'A query with only a condition on any summary quantity specified by the user',
                                                     'value': {
                                                         'average_transfer_amount_kg': '< 0.5'
                                                             }
