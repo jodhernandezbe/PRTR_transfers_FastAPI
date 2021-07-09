@@ -8,7 +8,7 @@ The API contains and deploys summary information for 3 Pollutant Release and Tra
 
 ### Enhanced entity-relationship diagram (EERD) for the PRTR_transfers_summary database
 
-The EERD model in the following figure represents the PRTR_transfers_summary database schema created from the summary for PRTR_transfers database (see [link](https://github.com/jodhernandezbe/PRTR_transfers/blob/master/data_engineering/load/PRTR_transfers_EER_Diagram.svg)).
+The EERD model in the following figure represents the PRTR_transfers_summary database schema created for the records from the PRTR_transfers database (see [link](https://github.com/jodhernandezbe/PRTR_transfers/blob/master/data_engineering/load/PRTR_transfers_EER_Diagram.svg)).
 
 <p align="center">
   <img src=https://github.com/jodhernandezbe/PRTR_transfers_FastAPI/blob/master/output/PRTR_transfers_summary_EERD.svg width="100%">
