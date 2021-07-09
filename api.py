@@ -7,7 +7,7 @@ import model
 from query import get_records, get_records_by_conditions
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
 
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 import uvicorn
 from fastapi.encoders import jsonable_encoder
@@ -33,7 +33,36 @@ def get_db():
         summary='PRTR transfers summary data',
         response_model=RecordResponseModel,
         response_model_exclude={'record_id'})
-def read_record(record_request: RecordRequestModel, db: Session = Depends(get_db)):
+def read_record(record_request: RecordRequestModel = Body(...,
+                examples={'example_1': {'summary': 'All parameters',
+                                    'description': 'A query with all parameters specified by the user',
+                                    'value': {
+                                        'reporting_year': 1987,
+                                        'country': 'USA',
+                                        'generic_substance_id': 'NA-01',
+                                        'generic_sector_code': 24,
+                                        'generic_transfer_class_id': 'M4'
+                                            }
+                                        },
+                        'example_2': {'summary': 'Excluding a parameter',
+                                    'description': 'A query with one parameter excluded by the user',
+                                    'value': {
+                                        'reporting_year': 2019,
+                                        'generic_substance_id': 'NA-06',
+                                        'generic_sector_code': 71,
+                                        'generic_transfer_class_id': 'M9'
+                                            }
+                                        },
+                        'example_3': {'summary': 'Excluding many parameters',
+                                    'description': 'A query with one parameter excluded by the user',
+                                    'value': {
+                                        'country': 'CAN'
+                                            }
+                                    }
+                        }
+                                                        ),
+                db: Session = Depends(get_db)
+                ):
     '''
     Fucntion to HTTP request and response for records
     '''
@@ -53,8 +82,32 @@ def read_record(record_request: RecordRequestModel, db: Session = Depends(get_db
         summary='PRTR transfers summary data based on conditions',
         response_model=RecordResponseModel,
         response_model_exclude={'record_id'})
-def read_record_with_condition(record_request: RecordRequestInequalityModel,
-                            db: Session = Depends(get_db)):
+def read_record_with_condition(record_request: RecordRequestInequalityModel = Body(...,
+                                examples={'example_1': {'summary': 'Chemical and total quantity',
+                                                        'description': 'A query with a chemical and a condition on the total transfer quantity specified by the user',
+                                                        'value': {
+                                                            'generic_substance_id': '7440020',
+                                                            'total_transfer_amount_kg': '>= 100.00'
+                                                                }
+                                                        },
+                                        'example_2': {'summary': 'Sector and max quantity',
+                                                    'description': 'A query with one an industry sector and a condition on the maximum transfer quantity excluded by the user',
+                                                    'value': {
+                                                        'generic_sector_code': 24,
+                                                        'max_transfer_amount_kg': '>= 10000'
+                                                            }
+                                                        },
+                                        'example_3': {'summary': 'Only a summary quantity',
+                                                    'description': 'A query with only a condition on a summary quantity specified by the user',
+                                                    'value': {
+                                                        'average_transfer_amount_kg': '< 0.5'
+                                                            }
+                                                    }
+                        }
+                                
+                                                                                    ),
+                            db: Session = Depends(get_db)
+                            ):
     '''
     Function to HTTP request and response for records based on conditions
     '''
@@ -73,5 +126,5 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel,
 if __name__ == "__main__":
     uvicorn.run("api:app", host="127.0.0.1",
                 port=8000, log_level="info",
-                reload=False)
+                reload=True)
 
