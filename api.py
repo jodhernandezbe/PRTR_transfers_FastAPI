@@ -34,6 +34,7 @@ def get_db():
 @app.get('/sectors/',
         summary='Generic industry sectors in the PRTR_transfers_summary database',
         response_class = HTMLResponse,
+        include_in_schema=False,
         responses = {200: {'description': 'HTML table with generic industry sectors',
                             'content': {'text/html': {}}}}
         )
@@ -44,6 +45,7 @@ def get_sector_records(request: Request):
 @app.get('/substances/',
         summary='Generic substances in the PRTR_transfers_summary database',
         response_class = HTMLResponse,
+        include_in_schema=False,
         responses = {200: {'description': 'HTML table with generic substances',
                             'content': {'text/html': {}}}})
 def get_substance_records(request: Request):
@@ -53,6 +55,7 @@ def get_substance_records(request: Request):
 @app.get('/transfer_classes/',
         summary='Generic transfer classes in the PRTR_transfers_summary database',
         response_class = HTMLResponse,
+        include_in_schema=False,
         responses = {200: {'description': 'HTML table with generic transfer classes',
                             'content': {'text/html': {}}}})
 def get_transfer_class_records(request: Request):
