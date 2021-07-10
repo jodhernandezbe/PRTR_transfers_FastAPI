@@ -62,7 +62,7 @@ def get_transfer_class_records(request: Request):
 @app.post('/records/',
         summary='PRTR transfers summary data',
         response_model=RecordResponseModel,
-        response_model_exclude={'record_id'},
+        response_model_exclude={"record_id"},
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
                         'content': {
@@ -134,7 +134,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
 @app.post('/conditional_records/',
         summary='PRTR transfers summary data based on conditions',
         response_model=RecordResponseModel,
-        response_model_exclude={'record_id'},
+        response_model_exclude={"record_id"},
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
                         'content': {
