@@ -129,7 +129,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")
 
-    json_compatible_item_data = jsonable_encoder(records)
+    json_compatible_item_data = jsonable_encoder(records, exclude={"record_id"})
     
     return JSONResponse(content=json_compatible_item_data)
 
@@ -197,7 +197,7 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")
 
-    json_compatible_item_data = jsonable_encoder(records)
+    json_compatible_item_data = jsonable_encoder(records, exclude={"record_id"})
     
     return JSONResponse(content=json_compatible_item_data)
 
