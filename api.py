@@ -65,7 +65,6 @@ def get_transfer_class_records(request: Request):
 @app.post('/records/',
         summary='PRTR transfers summary data',
         response_model=RecordResponseModel,
-        response_model_exclude={"record_id"},
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
                         'content': {
@@ -129,7 +128,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")
 
-    json_compatible_item_data = jsonable_encoder(records, exclude={"record_id"})
+    json_compatible_item_data = jsonable_encoder(records)
     
     return JSONResponse(content=json_compatible_item_data)
 
@@ -137,7 +136,6 @@ def read_record(record_request: RecordRequestModel = Body(...,
 @app.post('/conditional_records/',
         summary='PRTR transfers summary data based on conditions',
         response_model=RecordResponseModel,
-        response_model_exclude={"record_id"},
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
                         'content': {
@@ -197,7 +195,7 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")
 
-    json_compatible_item_data = jsonable_encoder(records, exclude={"record_id"})
+    json_compatible_item_data = jsonable_encoder(records)
     
     return JSONResponse(content=json_compatible_item_data)
 
