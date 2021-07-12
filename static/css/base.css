@@ -5,6 +5,7 @@
 }
 
 #footer {
+    position: absolute;
     background-color: #d22020;
     color: white;
     width: 100%;
