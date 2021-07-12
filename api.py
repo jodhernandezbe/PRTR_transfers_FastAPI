@@ -34,6 +34,16 @@ def get_db():
     finally:
         db.close()
 
+@app.get('/',
+        summary='Home',
+        response_class = HTMLResponse,
+        include_in_schema=False,
+        responses = {200: {'description': 'HTML home',
+                            'content': {'text/html': {}}}}
+        )
+def get_sector_records(request: Request):    
+    return templates.TemplateResponse("home.html", {"request": request})
+
 
 @app.get('/sectors/',
         summary='Generic industry sectors in the PRTR_transfers_summary database',
