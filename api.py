@@ -13,6 +13,7 @@ import uvicorn
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 
 templates = Jinja2Templates(directory="templates")
@@ -21,6 +22,9 @@ model.Base.metadata.create_all(bind=Engine)
 app = FastAPI(title='PRTR transfers summary data',
             description='This is an API that summarizes the information obtained by performing data engineering to 3 Pollutant Release and Transfer Register (​PRTR) systems. The 3 PRTR systems are the Australian National Pollutant Inventory (NPI), the Canadian National Pollutant Release Inventory (NPRI), and the United States of America Toxics Release Inventory (TRI). A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the 3 PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>). Also, other GitHub repository has information about how to obtain the SQL database, API, and schemas for the PRTR transfers summary data (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">PRTR_transfers_FastAPI</a>).',
             version='0.0.1')
+app.mount("/static",
+        StaticFiles(directory="static"),
+        name="static")
 
 # Dependency
 def get_db():

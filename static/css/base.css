@@ -1,0 +1,13 @@
+#header {
+    background-color: #d22020;
+    color: white;
+    width: 100%;
+}
+
+#footer {
+    background-color: #d22020;
+    color: white;
+    width: 100%;
+    bottom: 0;
+    font-weight: bold;
+}
