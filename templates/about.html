@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mb-4 mt-4">
+    <h2>About</h2>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-9">
+            <h3>Overview</h3>
+            <p style="text-align: justify; text-justify: inter-word;">
+                The PRTR transfer summary database contains a publicly-available inventory of chemicals or pollutants transferred off-site for disposal, treatment, energy recovery and recycling. It gathers information on which chemicals are transferred, in what quantity, by which industry sector, and the reason for the transfer (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">link</a>). A data engineering procedure transforms the information into a standard/generic machine-readable structure for future automation (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">link</a>). The data come from three Pollutant Release and Transfer Register (PRTR) systems that satisfy the conditions for constructing chemical-based approaches for estimating end-of-life emissions of chemicals. These three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxic Release Inventory (TRI)</a>, which are part of the <a href="https://www.oecd.org/chemicalsafety/pollutant-release-transfer-register/">Organisation for Economic Co-operation and Development (OECD)</a> PRTR that is constructed from OECD member countries.
+            </p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-9">
+            <h3>Basic data analysis and insights</h3>
+            <p style="text-align: justify; text-justify: inter-word;">
+            The following dashboard depicts insights about the information contains in the PRTR summary data base.
+            </p>
+            <iframe width="100%" height=450px src="https://datastudio.google.com/embed/reporting/058062b7-7e99-4617-8b86-0b440fa99107/page/hKkUC" frameborder="0" style="border:0" allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
