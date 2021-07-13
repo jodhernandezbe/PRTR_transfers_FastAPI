@@ -4,7 +4,7 @@
 # Importing libraries
 from base import creating_session_engine
 import model
-from query import get_records, get_records_by_conditions
+from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
 
 from fastapi import FastAPI, Depends, HTTPException, Body, Request
@@ -54,8 +54,13 @@ def get_sector_records(request: Request):
         responses = {200: {'description': 'HTML table with generic industry sectors',
                             'content': {'text/html': {}}}}
         )
-def get_sector_records(request: Request):    
-    return templates.TemplateResponse("generic_sector.html", {"request": request})
+def get_sector_records(request: Request, db: Session = Depends(get_db)):
+    columns, outer_list = getting_list_of_lists(db, model.GenericSector)    
+    context = {'table_title': 'Generic industry sectors',
+                'columns': columns,
+                'record_rows': outer_list,
+                'request': request}
+    return templates.TemplateResponse("table.html", context=context)    
 
 
 @app.get('/substances/',
@@ -64,8 +69,13 @@ def get_sector_records(request: Request):
         include_in_schema=False,
         responses = {200: {'description': 'HTML table with generic substances',
                             'content': {'text/html': {}}}})
-def get_substance_records(request: Request):
-    return templates.TemplateResponse("generic_substance.html", {"request": request})
+def get_substance_records(request: Request, db: Session = Depends(get_db)):
+    columns, outer_list = getting_list_of_lists(db, model.GenericSubstance)    
+    context = {'table_title': 'Generic substances',
+                'columns': columns,
+                'record_rows': outer_list,
+                'request': request}
+    return templates.TemplateResponse("table.html", context=context) 
 
 
 @app.get('/transfer_classes/',
@@ -74,8 +84,13 @@ def get_substance_records(request: Request):
         include_in_schema=False,
         responses = {200: {'description': 'HTML table with generic transfer classes',
                             'content': {'text/html': {}}}})
-def get_transfer_class_records(request: Request):
-    return templates.TemplateResponse("generic_transfer_class.html", {"request": request})
+def get_transfer_class_records(request: Request, db: Session = Depends(get_db)):
+    columns, outer_list = getting_list_of_lists(db, model.GenericTransferClass)    
+    context = {'table_title': 'Generic transfer classes',
+                'columns': columns,
+                'record_rows': outer_list,
+                'request': request}
+    return templates.TemplateResponse("table.html", context=context)
 
 
 @app.post('/records/',

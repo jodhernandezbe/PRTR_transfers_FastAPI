@@ -61,5 +61,20 @@ def get_records_by_conditions(db: Session, fields):
     return results
 
 
+def getting_list_of_lists(db: Session, Table):
+    results = db.query(Table)
+    results = results.all()
+
+    columns = Table.__table__.columns.keys()
+
+    outer_list = list()
+    for result in results:
+        inner_list = list()
+        for column in columns:
+            inner_list.append(result.__dict__[column])
+        outer_list.append(inner_list)
+
+    return columns, outer_list
+
 
 
