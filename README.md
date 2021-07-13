@@ -16,11 +16,12 @@ The EERD model in the following figure represents the PRTR_transfers_summary dat
 
 ## Remote deployment
 
-This API was deployed at Heroku where you can also test it from the docs endpoint
+This API was deployed at Heroku
 
-https://prtr-transfers-summary.herokuapp.com/docs
+https://prtr-transfers-summary.herokuapp.com/
 
 <ul>
+  <li>You can run queries in https://prtr-transfers-summary.herokuapp.com/docs/</li>
   <li>You can see the generic industry sectors list in https://prtr-transfers-summary.herokuapp.com/sectors/</li>
   <li>You can see the generic substances list in https://prtr-transfers-summary.herokuapp.com/substances/</li>
   <li>You can see the generic transfer classes list in https://prtr-transfers-summary.herokuapp.com/transfer_classes/</li>
