@@ -23,7 +23,7 @@ h2 {
 }
 
 .carousel-inner img {
-    height: 100vh;
+    height: calc(100vh - 56px - 64px);
     object-fit: cover;
     filter: grayscale(70%);
 }
