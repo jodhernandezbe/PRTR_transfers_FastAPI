@@ -19,9 +19,11 @@ from fastapi.staticfiles import StaticFiles
 templates = Jinja2Templates(directory="templates")
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 model.Base.metadata.create_all(bind=Engine)
-app = FastAPI(title='PRTR transfers summary data',
-            description='This is an API that summarizes the information obtained by performing data engineering to 3 Pollutant Release and Transfer Register (​PRTR) systems. The 3 PRTR systems are the Australian National Pollutant Inventory (NPI), the Canadian National Pollutant Release Inventory (NPRI), and the United States of America Toxics Release Inventory (TRI). A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the 3 PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>). Also, other GitHub repository has information about how to obtain the SQL database, API, and schemas for the PRTR transfers summary data (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">PRTR_transfers_FastAPI</a>).',
-            version='0.0.1')
+app = FastAPI(title='PRTR transfers summary',
+            description='This is an API that summarizes the information obtained by performing data engineering to 3 Pollutant Release and Transfer Register (​PRTR) systems. The 3 PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the 3 PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>). Also, other GitHub repository has information about how to obtain the SQL database, the API, and the schemas/models for the PRTR transfers summary data (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">PRTR_transfers_FastAPI</a>).',
+            version='0.0.1',
+            docs_url="/documentation",
+            redoc_url=None)
 app.mount("/static",
         StaticFiles(directory="static"),
         name="static")
