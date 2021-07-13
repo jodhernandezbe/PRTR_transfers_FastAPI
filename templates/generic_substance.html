@@ -10,7 +10,7 @@
   <h3>Generic substances</h3>
 
   <div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="table-substances">
       <thead>
         <tr>
           <th>generic_substance_id</th>
@@ -3243,4 +3243,12 @@
 </div>
 </div>
 
+{% endblock %}
+
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#table-substances').DataTable();
+  } );
+  </script>
 {% endblock %}

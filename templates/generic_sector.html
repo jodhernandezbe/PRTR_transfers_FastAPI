@@ -10,7 +10,7 @@
   <h3>Generic industry sectors</h3>                                                                                                                              
 
   <div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="table-sectors">
       <thead>
         <tr>
           <th>generic_sector_code</th>
@@ -315,4 +315,13 @@
 </div>
 </div>
 
+{% endblock %}
+
+
+{% block js %}
+<script>
+$(document).ready( function () {
+  $('#table-sectors').DataTable();
+} );
+</script>
 {% endblock %}

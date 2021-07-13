@@ -10,7 +10,7 @@
   <h3>Generic transfer classes</h3>
 
   <div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="table-transfer-classes">
       <thead>
         <tr>
           <th>generic_transfer_class_id</th>
@@ -78,4 +78,12 @@
 </div>
 </div>
 
+{% endblock %}
+
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#table-transfer-classes').DataTable();
+  } );
+  </script>
 {% endblock %}

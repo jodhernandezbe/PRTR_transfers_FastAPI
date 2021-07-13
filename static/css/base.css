@@ -39,3 +39,8 @@ h2 {
 #carousel .overlay .row {
     height: 100%;
 }
+
+h3 {
+   padding-top: 30px;
+   padding-bottom: 40px; 
+}
