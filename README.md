@@ -1,5 +1,10 @@
 # PRTR transfers FastAPI
 
+
+<p align="center">
+  <img src=https://github.com/jodhernandezbe/PRTR_transfers_FastAPI/blob/master/static/img/logo.svg width="90%">
+</p>
+
 ## Overview
 
 ### Data source
