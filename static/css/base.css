@@ -5,12 +5,16 @@
     margin: 0;
 }
 
+main {
+    min-height: calc(100vh - 56px - 64px);
+}
+
 h2 {
     margin: 0;
 }
 
 #footer {
-    position: fixed;
+    /* position:absolute; */
     background-color: #d22020;
     color: white;
     width: 100%;
@@ -41,6 +45,6 @@ h2 {
 }
 
 h3 {
-   padding-top: 30px;
-   padding-bottom: 15px; 
+   padding-top: 20px;
+   padding-bottom: 5px; 
 }
