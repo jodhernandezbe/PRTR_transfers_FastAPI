@@ -10,7 +10,7 @@
 }
 
 main {
-    min-height: calc(100vh - 80px - 86px);
+    min-height: calc(100vh - 64px - 86px);
 }
 
 h2 {
@@ -23,11 +23,11 @@ h2 {
     color: white;
     width: 100%;
     bottom: 0;
-    font-weight: bold;
+    font-weight: light;
 }
 
 .carousel-inner img {
-    height: calc(100vh - 80px - 86px);
+    height: calc(100vh - 64px - 86px);
     object-fit: cover;
     filter: grayscale(70%);
 }
