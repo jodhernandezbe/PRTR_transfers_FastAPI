@@ -9,6 +9,7 @@ dependencies:
   - _openmp_mutex=4.5=1_gnu
   - aiofiles=0.7.0=py39h06a4308_0
   - asgiref=3.4.1=pyhd8ed1ab_0
+  - bokeh=2.3.3=py39h06a4308_0
   - ca-certificates=2021.7.5=h06a4308_1
   - certifi=2021.5.30=py39h06a4308_0
   - click=8.0.1=pyhd3eb1b0_0

@@ -6,3 +6,4 @@ sqlalchemy==1.4.20
 uvicorn==0.14.0
 jinja2==3.0.1
 aiofiles==0.7.0
+bokeh==2.3.3
