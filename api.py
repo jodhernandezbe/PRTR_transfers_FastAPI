@@ -14,6 +14,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from dashboard import plot
 
 
 templates = Jinja2Templates(directory="templates")
@@ -47,7 +48,7 @@ def get_sector_records(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
 @app.get('/about/',
-        summary='Dashboard',
+        summary='About',
         response_class = HTMLResponse,
         include_in_schema=False,
         responses = {200: {'description': 'HTML about',
@@ -55,6 +56,18 @@ def get_sector_records(request: Request):
         )
 def get_sector_records(request: Request):    
     return templates.TemplateResponse("about.html", {"request": request})
+
+
+@app.get('/dashboard/',
+        summary='Dashboard',
+        response_class = HTMLResponse,
+        include_in_schema=False,
+        responses = {200: {'description': 'HTML about',
+                            'content': {'text/html': {}}}}
+        )
+def get_sector_records(request: Request):
+    script, div = plot()
+    return templates.TemplateResponse("dashboard.html", {"request": request, "script": script, "div": div})
 
 
 @app.get('/sectors/',
