@@ -68,6 +68,7 @@ h3 {
 
 .btn-prtr:hover {
     background-color: #577fc0;
+    cursor: pointer;
 }
 
 #text-fullscreen  {
@@ -76,4 +77,5 @@ h3 {
 
 #text-fullscreen:hover {
     color: #577fc0;
+    cursor: pointer;
 }
