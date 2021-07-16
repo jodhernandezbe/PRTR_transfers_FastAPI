@@ -3,15 +3,19 @@
 {% block content %}
 
 <div class="container mb-4 mt-4">
-    <h2>About</h2>
-    <figure class="text-center p-4">
-        <img src="{{ url_for('static', path='img/logo.svg') }}" class="figure-img img-fluid rounded" alt="Logo">
-    </figure>
     <div class="row justify-content-center">
-        <div class="col-12 col-sm-12 col-md-11 col-lg-9">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 p-0">
+            <h2>About</h2>
+            <figure class="text-center p-4">
+                <img src="{{ url_for('static', path='img/logo.svg') }}" class="figure-img img-fluid rounded" alt="Logo">
+            </figure>
+        </div>
+    </div>
+    <div class="row justify-content-center m-0">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 p-0">
             <h3>Overview</h3>
             <p style="text-align: justify; text-justify: inter-word;">
-                The PRTR transfer summary database contains a publicly-available inventory of chemicals or pollutants transferred off-site for disposal, treatment, energy recovery and recycling. It gathers information on which chemicals are transferred, in what quantity, by which industry sector, and the reason for the transfer (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">link</a>). A data engineering procedure transforms the information into a standard/generic machine-readable structure for future automation (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">link</a>). The data come from three Pollutant Release and Transfer Register (PRTR) systems that satisfy the conditions for constructing chemical-based approaches for estimating end-of-life emissions of chemicals. These three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxic Release Inventory (TRI)</a>, which are part of the <a href="https://www.oecd.org/chemicalsafety/pollutant-release-transfer-register/">Organisation for Economic Co-operation and Development (OECD)</a> PRTR that is constructed from OECD member countries.
+                The PRTR transfer summary database contains a publicly-available inventory of chemicals or pollutants transferred off-site for disposal, treatment, energy recovery and recycling. It gathers information on which chemicals are transferred, in what quantity, by which industry sector, and the reason for the transfer (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">link</a>). A data engineering procedure transforms the information into a standard/generic machine-readable structure for future automation (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">link</a>). The data come from three Pollutant Release and Transfer Register (PRTR) systems that satisfy the conditions for constructing chemical-based approaches for estimating end-of-life emissions of chemicals. These three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxic Release Inventory (TRI)</a>, which are part of the <a href="https://www.oecd.org/chemicalsafety/pollutant-release-transfer-register/">Organisation for Economic Co-operation and Development (OECD)</a> PRTR that is constructed based on data shared by the OECD member countries.
             </p>
         </div>
     </div>

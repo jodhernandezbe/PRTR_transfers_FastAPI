@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container m-0 p-0 mt-4 pt-4 mb-4 mt-4 h-100 w-100 border border-dark border-3">
-    <div class="row justify-content-center" style="height: calc(100vh - 80px - 110px); margin: 0;">
-        <div class="col col-lg-12 col-md-12 col-sm-12 p-0" id="dash">
-            {{ div | safe }}
+<div class="container m-0 p-0 mb-4 mt-4 h-100 w-100">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-11 col-lg-10 p-0">
+            <h2 class="pb-4">Dashboard</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col-auto pt-4 pb-2 pl-4">
-            <input type="image" id="image" alt="Full screen"
-                src="{{ url_for('static', path='img/fullscreen.png') }}"
-                onclick="openFullscreen();"
-                class="btn btn-prtr btn-block"
-                type="button">
+    <div class="row-auto border border-dark border-3">
+        <div class="row justify-content-center" style="height: calc(100vh - 80px - 110px); margin: 0;">
+            <div class="col col-lg-12 col-md-12 col-sm-12 p-0" id="dash">
+                {{ div | safe }}
+            </div>
         </div>
-        <div class="col-auto pt-4 pb-2 pl-0 text-start">
-            <span onclick="openFullscreen();" id="text-fullscreen"><u>Full screen access</u></span>
+        <div class="row">
+            <div class="col-auto pt-4 pb-2 pl-4">
+                <input type="image" id="image" alt="Full screen"
+                    src="{{ url_for('static', path='img/fullscreen.png') }}"
+                    onclick="openFullscreen();"
+                    class="btn btn-prtr btn-block"
+                    type="button">
+            </div>
+            <div class="col-auto pt-4 pb-2 pl-0 text-start">
+                <span onclick="openFullscreen();" id="text-fullscreen"><u>Full screen access</u></span>
+            </div>
         </div>
-    </div>
+    </div> 
 </div>
 {% endblock %}
 
