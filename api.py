@@ -6,6 +6,7 @@ from base import creating_session_engine
 import model
 from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
+from dashboard.dashboard import creating_dashboard
 
 from fastapi import FastAPI, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
@@ -14,12 +15,25 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from dashboard import plot
+from bokeh.embed import server_document
+from bokeh.application import Application
+from bokeh.application.handlers import FunctionHandler
+from bokeh.server.util import bind_sockets
+import asyncio
+from bokeh.server.server import BaseServer
+from bokeh.server.tornado import BokehTornado
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+from threading import Thread
 
+creating_dashboard = Application(FunctionHandler(creating_dashboard))
+sockets, port = bind_sockets("localhost", 0)
 
 templates = Jinja2Templates(directory="templates")
+
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 model.Base.metadata.create_all(bind=Engine)
+
 app = FastAPI(title='PRTR transfers summary',
             description='This is an API that summarizes the information obtained by performing data engineering to three Pollutant Release and Transfer Register (​PRTR) systems. The three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the three PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>). Also, other GitHub repository has information about how to obtain the SQL database, the API, and the schemas/models for the PRTR transfers summary data (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">PRTR_transfers_FastAPI</a>).',
             version='0.0.1',
@@ -28,6 +42,7 @@ app = FastAPI(title='PRTR transfers summary',
 app.mount("/static",
         StaticFiles(directory="static"),
         name="static")
+
 
 # Dependency
 def get_db():
@@ -66,9 +81,10 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    script, div = plot()
-    return templates.TemplateResponse("dashboard.html", {"request": request, "script": script, "div": div})
-
+    url = f'http://localhost:{port}/bkapp'
+    script = server_document(url)
+    return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
+        
 
 @app.get('/sectors/',
         summary='Generic industry sectors in the PRTR_transfers_summary database',
@@ -254,8 +270,24 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     return JSONResponse(content=json_compatible_item_data)
 
 
+def bk_worker():
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
+    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard}, extra_websocket_origins=["localhost:8000"])
+    bokeh_http = HTTPServer(bokeh_tornado)
+    bokeh_http.add_sockets(sockets)
+
+    server = BaseServer(IOLoop.current(), bokeh_tornado, bokeh_http)
+    server.start()
+    server.io_loop.start()
+
+
+t = Thread(target=bk_worker)
+t.daemon = True
+t.start()
+
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="127.0.0.1",
+    uvicorn.run("api:app", host="localhost",
                 port=8000, log_level="info",
                 reload=True)
 

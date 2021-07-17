@@ -5,7 +5,7 @@ $(document).ready( function () {
     } );
 
 /* View in fullscreen */
-var elem = document.getElementById("dash");
+var elem = document.getElementById("dash_col");
 function openFullscreen() {
     if (elem.requestFullscreen) {
     elem.requestFullscreen();

@@ -80,3 +80,7 @@ h3 {
     color: #577fc0;
     cursor: pointer;
 }
+
+#dash_col {
+    background-color: white;
+}

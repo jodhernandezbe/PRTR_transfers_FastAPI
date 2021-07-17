@@ -8,9 +8,9 @@
         </div>
     </div>
     <div class="row-auto border border-dark border-3 pl-2 pr-2">
-        <div class="row justify-content-center" style="height: calc(100vh - 80px - 110px); margin: 0;">
-            <div class="col col-lg-12 col-md-12 col-sm-12 p-0" id="dash">
-                {{ div | safe }}
+        <div class="row justify-content-center" style="margin: 0;">
+            <div class="col col-lg-12 col-md-12 col-sm-12 p-0" id="dash_col">
+                {{ script|safe }}
             </div>
         </div>
         <div class="row">
@@ -33,6 +33,5 @@
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js"></script>
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.3.min.js"></script>
 <script type="text/javascript" charset="utf8" src="{{ url_for('static', path='js/functions.js') }}"></script>
-{{ script | safe }}
 {% endblock %}
 
