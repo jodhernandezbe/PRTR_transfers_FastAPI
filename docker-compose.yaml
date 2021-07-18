@@ -1,0 +1,20 @@
+version: '2'
+services:
+    bokeh_app:
+        build:
+            context: .
+            dockerfile: bokeh_app.Dockerfile
+        ports:
+            - '5006:5006'
+        volumes:
+            - './:/PRTR_transfers_FastAPI'
+    fastapi_app:
+        depends_on:
+            - bokeh_app
+        build:
+            context: .
+            dockerfile: fastapi_app.Dockerfile
+        ports:
+            - '8000:8000'
+        volumes: 
+            - './:/PRTR_transfers_FastAPI'
