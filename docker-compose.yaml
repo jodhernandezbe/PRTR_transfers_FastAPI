@@ -3,7 +3,7 @@ services:
     bokeh_app:
         build:
             context: .
-            dockerfile: bokeh_app.Dockerfile
+            dockerfile: Dockerfile.bokeh_app
         ports:
             - '5006:5006'
         volumes:
@@ -13,7 +13,7 @@ services:
             - bokeh_app
         build:
             context: .
-            dockerfile: fastapi_app.Dockerfile
+            dockerfile: Dockerfile.fastapi_app
         ports:
             - '8000:8000'
         volumes: 
