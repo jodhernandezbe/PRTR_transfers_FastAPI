@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # Importing libraries
-from model import Record, GenericSubstance, GenericSector, GenericTransferClass
-from base import creating_session_engine
+from data.model import Record, GenericSubstance, GenericSector, GenericTransferClass
+from data.base import creating_session_engine
 
 import yaml
 import os

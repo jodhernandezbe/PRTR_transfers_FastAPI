@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 
 # Importing libraries
-import pandas as pd
-from base import creating_session_engine
-from dashboard.tab_1 import creating_tab_1
+from data.base import creating_session_engine
+from bokeh_app.tab_1 import creating_tab_1
 
 from bokeh.models.widgets import Tabs
+from bokeh.io import curdoc
+import pandas as pd
 
-def creating_dashboard(doc):
+
+def creating_dashboard():
     '''
     Function to create the dashboard
     '''
@@ -50,5 +52,9 @@ def creating_dashboard(doc):
     # Put all the tabs into one application
     tabs = Tabs(tabs=[tab1])
 
+    # Put the tabs in the current document for display
+    curdoc().add_root(tabs)
 
-    doc.add_root(tabs)
+
+# Running the dashboard
+creating_dashboard()

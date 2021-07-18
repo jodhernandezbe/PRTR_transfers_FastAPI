@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Importing libraries
-from model import Record
+from data.model import Record
 
 from sqlalchemy.orm import Session
 import re
