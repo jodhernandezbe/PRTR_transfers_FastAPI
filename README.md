@@ -2,7 +2,8 @@
 
 
 <p align="center">
-  <img src=https://github.com/jodhernandezbe/PRTR_transfers_FastAPI/blob/master/static/img/logo.svg width="50%">
+  <img src=https://github.com/jodhernandezbe/PRTR_transfers_FastAPI/blob/local
+/static/img/logo.svg width="50%">
 </p>
 
 ## Overview
