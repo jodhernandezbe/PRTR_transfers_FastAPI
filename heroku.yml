@@ -1,0 +1,7 @@
+setup:
+  config:
+    APP_NAME: prtr-transfers-summary
+build:
+  docker:
+    fastapi_app: fastapi_app.Dockerfile
+    bokeh_app: bokeh_app.Dockerfile
