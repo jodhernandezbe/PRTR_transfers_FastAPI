@@ -27,7 +27,7 @@ from tornado.ioloop import IOLoop
 from threading import Thread
 
 creating_dashboard = Application(FunctionHandler(creating_dashboard))
-sockets, port = bind_sockets("localhost", 0)
+sockets, port = bind_sockets("0.0.0.0", 0)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -81,7 +81,7 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    url = f'http://localhost:{port}/bkapp'
+    url = f'http://0.0.0.0:{port}/bkapp'
     script = server_document(url)
     return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
         
@@ -273,7 +273,7 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
 def bk_worker():
     asyncio.set_event_loop(asyncio.new_event_loop())
 
-    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard}, extra_websocket_origins=["localhost:8000"])
+    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard}, extra_websocket_origins=["*"])
     bokeh_http = HTTPServer(bokeh_tornado)
     bokeh_http.add_sockets(sockets)
 
@@ -287,7 +287,7 @@ t.daemon = True
 t.start()
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="localhost",
+    uvicorn.run("api:app", host="0.0.0.0",
                 port=8000, log_level="info",
                 reload=True)
 
