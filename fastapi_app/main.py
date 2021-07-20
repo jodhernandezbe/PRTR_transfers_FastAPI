@@ -75,7 +75,7 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    bokeh_url = 'http://0.0.0.0:5006/bokeh_app'
+    bokeh_url = 'https://prtr-bokeh.herokuapp.com/bokeh_app'
     with pull_session(url=bokeh_url) as session:
         script = server_session(session_id=session.id, url=bokeh_url)
         return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
