@@ -20,7 +20,6 @@ import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory path
 
-
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 Base.metadata.create_all(bind=Engine)
 

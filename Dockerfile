@@ -6,8 +6,8 @@ WORKDIR /PRTR_transfers_FastAPI
 
 SHELL ["/bin/bash", "--login", "-c"]
 
-COPY fastapi_environment.yml /PRTR_transfers_FastAPI/
-RUN conda env create --file fastapi_environment.yml
+COPY environment.yml /PRTR_transfers_FastAPI/
+RUN conda env create --file environment.yml
 
 RUN conda init bash
 
