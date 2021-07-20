@@ -4,28 +4,21 @@ services:
         image: bokeh_app:prod 
         build:
             context: .
-            dockerfile: Dockerfile.bokeh_app
+            dockerfile: Dockerfile.worker
         container_name: bokeh_app
         ports:
             - '5006:5006'
         volumes:
             - './:/PRTR_transfers_FastAPI'
-        networks:
-            - fastapi_bokeh_network
     fastapi_app:
         image: fastapi_app:prod 
         depends_on:
             - bokeh_app
         build:
             context: .
-            dockerfile: Dockerfile.fastapi_app
+            dockerfile: Dockerfile.web
         container_name: fastapi_app
         ports:
             - '8000:8000'
         volumes: 
             - './:/PRTR_transfers_FastAPI'
-        networks:
-            - fastapi_bokeh_network
-networks:
-    fastapi_bokeh_network:
-        name: fastapi_bokeh_network

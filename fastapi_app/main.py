@@ -14,7 +14,8 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from bokeh.embed import server_document
+from bokeh.client import pull_session
+from bokeh.embed import server_session
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory path
@@ -75,9 +76,10 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    url = 'http://localhost:5006/bokeh_app'
-    script = server_document(url)
-    return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
+    bokeh_url = 'http://0.0.0.0:5006/bokeh_app'
+    with pull_session(url=bokeh_url) as session:
+        script = server_session(session_id=session.id, url=bokeh_url)
+        return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
         
 
 @app.get('/sectors/',
@@ -265,7 +267,8 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost",
-                port=8000, log_level="info",
+    fastapi_port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0",
+                port=fastapi_port, log_level="info",
                 reload=True)
 
