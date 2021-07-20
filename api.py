@@ -25,11 +25,19 @@ from bokeh.server.tornado import BokehTornado
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from threading import Thread
+from bokeh.client import pull_session
+from bokeh.embed import server_session
+import os
+
+dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory path
+fastapi_port = int(os.environ.get('PORT', 5000))
+hostname = os.environ.get('HOSTNAME', '0.0.0.0')
 
 creating_dashboard = Application(FunctionHandler(creating_dashboard))
-sockets, port = bind_sockets("0.0.0.0", 0)
+sockets, bokeh_port = bind_sockets(hostname, 0)
 
-templates = Jinja2Templates(directory="templates")
+templates_path = f'{dir_path}/templates'
+templates = Jinja2Templates(directory=templates_path)
 
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 model.Base.metadata.create_all(bind=Engine)
@@ -39,8 +47,10 @@ app = FastAPI(title='PRTR transfers summary',
             version='0.0.1',
             docs_url="/documentation",
             redoc_url=None)
+
+static_path = f'{dir_path}/static'
 app.mount("/static",
-        StaticFiles(directory="static"),
+        StaticFiles(directory=static_path),
         name="static")
 
 
@@ -81,9 +91,11 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    url = f'http://0.0.0.0:{port}/bkapp'
-    script = server_document(url)
-    return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
+    bokeh_url = f'http://{hostname}:{bokeh_port}/bkapp'
+    print(bokeh_url)
+    with pull_session(url=bokeh_url) as session:
+        script = server_session(session_id=session.id, url=bokeh_url)
+        return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
         
 
 @app.get('/sectors/',
@@ -273,7 +285,10 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
 def bk_worker():
     asyncio.set_event_loop(asyncio.new_event_loop())
 
-    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard}, extra_websocket_origins=["*"])
+    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard},
+                            extra_websocket_origins=[f"{hostname}:{fastapi_port}"],
+                            port=bokeh_port,
+                            address=hostname)
     bokeh_http = HTTPServer(bokeh_tornado)
     bokeh_http.add_sockets(sockets)
 
@@ -287,7 +302,7 @@ t.daemon = True
 t.start()
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0",
-                port=8000, log_level="info",
+    uvicorn.run("api:app", host=hostname,
+                port=fastapi_port, log_level="info",
                 reload=True)
 
