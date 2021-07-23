@@ -23,6 +23,8 @@ def creating_tab_1(df_transfers, substances, countries,
     Fuction to make the fist tab for the dashboard
     '''
 
+    global opt_countries
+
     # Countries and their colors
     postions = [-0.25, 0.0, 0.25]
     country_colors = {country: Category20_16[i] for i, country in enumerate(countries)}
@@ -54,26 +56,24 @@ def creating_tab_1(df_transfers, substances, countries,
         # Compliting columns
         for country in countries:
             if not country in table.columns:
-                table[country] = 0.00
+                table[country] = 0.0
 
         # Compliting rows
         for year in years:
             if not year in table.index:
-                table.loc[country] = [0.0]*len(table.columns)
+                table.loc[year] = [0.0]*len(table.columns)
 
         # Reset indexes
         table.reset_index(inplace=True)
-
         
         src = ColumnDataSource(data=table)
-
 
         return src
 
 
     def make_plot(src):
-
-        # Blank plot with correct labels
+		
+	# Blank plot with correct labels
         plot = figure(
                     x_range=src.data['reporting_year'],
                     title='Total transfer amount reported by country',
@@ -94,13 +94,17 @@ def creating_tab_1(df_transfers, substances, countries,
                     hover_fill_alpha=1.0,
                     fill_alpha=0.7,
                     muted_color=country_colors[stacked_country],
-                    muted_alpha=0.2)
+                    muted_alpha=0.2,
+                    name=stacked_country)
 
         # Hover tool with vline mode
-        TOOLTIPS = [('Reporting year', '@reporting_year'),
-                    ('Total transfer amount [kg]', '$y{0,0.000}')]
+        TOOLTIPS = [
+                    ('Reporting year', '@reporting_year'),
+                    ('Country', '$name'),
+                    ('Total transfer amount [kg/yr]', '@$name{0,0.00}')
+                    ]
         hover = HoverTool(tooltips=TOOLTIPS,
-						  mode='vline')
+						  mode='mouse')
 
         plot.add_tools(hover)
 
@@ -110,7 +114,8 @@ def creating_tab_1(df_transfers, substances, countries,
         return plot
 
 
-    def update(attr, old, new):
+    def update_data(attr, old, new):
+        
         wm_to_plot = [wm_checkbox.labels[i] for i in wm_checkbox.active]
 
         new_src = make_dataset(wm_to_plot,
@@ -160,6 +165,10 @@ def creating_tab_1(df_transfers, substances, countries,
         plot.legend.orientation = "horizontal"
         plot.legend.click_policy="mute"
         plot.background_fill_color = "white"
+
+        plot.y_range.start = 0
+        plot.x_range.range_padding = 0.2
+        plot.xaxis.major_label_orientation = 1
         
         return plot
 
@@ -169,21 +178,22 @@ def creating_tab_1(df_transfers, substances, countries,
                             value=countries,
                             options=countries,
                             sizing_mode="stretch_width")
-    country_selector.on_change('value', update)
+    country_selector.on_change('value', update_data)
 
     # Establishing substance selector
     substance_selector = Select(title="Generic substance:",
                             value=substances[0],
                             options=substances,
                             sizing_mode="stretch_width")
-    substance_selector.on_change('value', update)
+    substance_selector.on_change('value', update_data)
 
     # Establishing wm selector
     wm_checkbox = CheckboxGroup(labels=waste_managements,
                             active=list(range(len(waste_managements))),
                             sizing_mode="stretch_both",
                             name='Waste management activity')
-    wm_checkbox.on_change('active', update)
+    wm_checkbox.on_change('active', update_data)
+
 
     # Initial transfers and data source
     initial_wm = [wm_checkbox.labels[i] for i in wm_checkbox.active]
