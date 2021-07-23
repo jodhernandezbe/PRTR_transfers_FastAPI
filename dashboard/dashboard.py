@@ -2,11 +2,22 @@
 # -*- coding: utf-8 -*-
 
 # Importing libraries
-import pandas as pd
 from base import creating_session_engine
 from dashboard.tab_1 import creating_tab_1
+from config import set_bokeh_port, FASTAPI_PORT, FASTAPI_ADDR, BOKEH_ADDR
 
+import pandas as pd
 from bokeh.models.widgets import Tabs
+import asyncio
+from bokeh.server.server import BaseServer
+from bokeh.server.tornado import BokehTornado
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+from threading import Thread
+from bokeh.application import Application
+from bokeh.application.handlers import FunctionHandler
+from bokeh.server.util import bind_sockets
+
 
 def creating_dashboard(doc):
     '''
@@ -31,7 +42,8 @@ def creating_dashboard(doc):
         INNER JOIN generic_transfer_class AS gtc
         ON tr.generic_transfer_class_id = gtc.generic_transfer_class_id
         INNER JOIN generic_sector AS gis
-        ON tr.generic_sector_code = gis.generic_sector_code;
+        ON tr.generic_sector_code = gis.generic_sector_code
+        ORDER BY gs.generic_substance_name;
         '''
 
     # Reading the data
@@ -52,3 +64,38 @@ def creating_dashboard(doc):
 
 
     doc.add_root(tabs)
+
+def  get_sockets():
+    """bind to available socket in this system
+    Returns:
+        sockets, port -- sockets and port bind to
+    """
+    _sockets, _port = bind_sockets('0.0.0.0', 0)
+    set_bokeh_port(_port)
+    return _sockets, _port
+
+
+def bk_worker(sockets, bokeh_port):
+
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
+    websocket_origins = [f"{BOKEH_ADDR}:{bokeh_port}", f"{FASTAPI_ADDR}:{FASTAPI_PORT}"]
+    _creating_dashboard = Application(FunctionHandler(creating_dashboard))
+
+    bokeh_tornado = BokehTornado({'/bkapp': _creating_dashboard},
+                            extra_websocket_origins=websocket_origins,
+                            **{'use_xheaders': True})
+    bokeh_http = HTTPServer(bokeh_tornado)
+    bokeh_http.add_sockets(sockets)
+
+    server = BaseServer(IOLoop.current(), bokeh_tornado, bokeh_http)
+    server.start()
+    server.io_loop.start()
+
+
+if __name__ == '__main__':
+
+    BK_SOCKETS, BK_PORT = get_sockets()
+
+    t = Thread(target=bk_worker, args=[BK_SOCKETS, BK_PORT], daemon=True)
+    t.start()

@@ -6,7 +6,7 @@ from base import creating_session_engine
 import model
 from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
-from dashboard.dashboard import creating_dashboard
+from config import FASTAPI_PORT, FASTAPI_ADDR, BOKEH_URL, BOKEH_ADDR
 
 from fastapi import FastAPI, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
@@ -16,25 +16,9 @@ from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from bokeh.embed import server_document
-from bokeh.application import Application
-from bokeh.application.handlers import FunctionHandler
-from bokeh.server.util import bind_sockets
-import asyncio
-from bokeh.server.server import BaseServer
-from bokeh.server.tornado import BokehTornado
-from tornado.httpserver import HTTPServer
-from tornado.ioloop import IOLoop
-from threading import Thread
-from bokeh.client import pull_session
-from bokeh.embed import server_session
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) # current directory path
-fastapi_port = int(os.environ.get('PORT', 5000))
-hostname = os.environ.get('HOSTNAME', '0.0.0.0')
-
-creating_dashboard = Application(FunctionHandler(creating_dashboard))
-sockets, bokeh_port = bind_sockets(hostname, 0)
 
 templates_path = f'{dir_path}/templates'
 templates = Jinja2Templates(directory=templates_path)
@@ -91,11 +75,8 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    bokeh_url = f'http://{hostname}:{bokeh_port}/bkapp'
-    print(bokeh_url)
-    with pull_session(url=bokeh_url) as session:
-        script = server_session(session_id=session.id, url=bokeh_url)
-        return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
+    script = server_document(f'{BOKEH_URL}/bkapp', resources=None)
+    return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
         
 
 @app.get('/sectors/',
@@ -282,27 +263,12 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     return JSONResponse(content=json_compatible_item_data)
 
 
-def bk_worker():
-    asyncio.set_event_loop(asyncio.new_event_loop())
+def start_uvicorn():
+    uvicorn.run("fastapi_app:app", host=FASTAPI_ADDR,
+                port=FASTAPI_PORT, log_level="info",
+                reload=True)
 
-    bokeh_tornado = BokehTornado({'/bkapp': creating_dashboard},
-                            extra_websocket_origins=[f"{hostname}:{fastapi_port}"],
-                            port=bokeh_port,
-                            address=hostname)
-    bokeh_http = HTTPServer(bokeh_tornado)
-    bokeh_http.add_sockets(sockets)
-
-    server = BaseServer(IOLoop.current(), bokeh_tornado, bokeh_http)
-    server.start()
-    server.io_loop.start()
-
-
-t = Thread(target=bk_worker)
-t.daemon = True
-t.start()
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host=hostname,
-                port=fastapi_port, log_level="info",
-                reload=True)
+    start_uvicorn()
 
