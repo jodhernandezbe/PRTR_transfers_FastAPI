@@ -15,3 +15,10 @@ function openFullscreen() {
     elem.msRequestFullscreen();
     }
 }
+
+
+$(function() {
+    var height = $(window).height() - ($("#header").outerHeight(true) - $("#footer").outerHeight(true));
+    $("#main").css("min-height",height+"px");
+    $(".carousel-inner img").css("max-height",height+"px");
+});

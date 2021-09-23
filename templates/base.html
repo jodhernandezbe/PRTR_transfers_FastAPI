@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='css/base.css') }}"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {% block css %}
         {% endblock %}
 
@@ -52,7 +53,7 @@
                                 <a class="nav-link" href="/dashboard/">DataViz</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/documentation/">Documentation</a>
+                                <a class="nav-link" href="/v1/api_documentation/">REST services</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">GitHub repository</a>
@@ -68,18 +69,46 @@
             {% endblock %}
         </main>
 
-        <footer id="footer" class="pb-2 pt-2">
-            <div class="container text-center">
-                <div class="row justify-content-center">
-                    Copyright &#169 2021 Jose D. Hernandez-Betancur All Rights Reserved.
+        <!-- Footer -->
+        <footer class="page-footer" id="footer">
+
+            <!-- Footer Elements -->
+            <div class="container-fluid" align="center">
+        
+                <!-- Grid row-->
+                <div class="row">
+            
+                    <!-- Grid column -->
+                    <div class="col w-100">
+                        <!-- <div class="mb-5 flex-center"> -->
+                
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/jodhernandezbe" class="fa fa-facebook"></a>
+                            <!-- Twitter -->
+                            <a href="https://twitter.com/jodhernandezbe" class="fa fa-twitter"></a>
+                            <!--Linkedin -->
+                            <a href="https://www.linkedin.com/in/jodhernandezbe/" class="fa fa-linkedin"></a>
+                            <!--Instagram-->
+                            <a href="https://www.instagram.com/jodhernandezbe/" class="fa fa-instagram"></a>
+                        <!-- </div> -->
+                    </div>
+                    <!-- Grid column -->
+            
                 </div>
-                <div class="row justify-content-center">
-                    <address style="margin: 0;">
-                        <a href="mailto:jodhernandezbemj@gmail.com" style="color: white;">jodhernandezbemj@gmail.com</a>
-                    </address>
-                </div>
+                <!-- Grid row-->
+        
             </div>
+            <!-- Footer Elements -->
+        
+
+            <!-- Copyright -->
+            <div class="footer-copyright text-center p-2">© 2020 Copyright:
+                <a href="www.sustineritechem.com" style="color: white;"><u>SustineriTeChem.com</u></a>
+            </div>
+            <!-- Copyright -->
+        
         </footer>
+        <!-- Footer -->
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

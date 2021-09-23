@@ -15,10 +15,6 @@
     width: 80px;
 }
 
-main {
-    min-height: calc(100vh - 64px - 106px);
-}
-
 h2 {
     margin: 0;
     color: #d22020;;
@@ -33,7 +29,7 @@ h2 {
 }
 
 .carousel-inner img {
-    height: calc(100vh - 64px - 106px);
+    width: 100vw;
     object-fit: cover;
     filter: grayscale(70%);
 }
@@ -83,4 +79,33 @@ h3 {
 
 #dash_col {
     background-color: white;
+}
+
+.fa {
+    padding: 30px;
+    font-size: 30px;
+    width: 60;
+    text-align: center;
+    text-decoration: none;
+    border-radius:50%;
+}
+
+.fa:hover {
+      opacity: 0.7;
+}
+  
+.fa-facebook {
+    color: white;
+}
+  
+.fa-twitter {
+    color: white;
+}
+  
+.fa-linkedin {
+    color: white;
+}
+  
+.fa-instagram {
+    color: white;
 }

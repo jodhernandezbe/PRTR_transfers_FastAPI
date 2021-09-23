@@ -3,7 +3,7 @@
 
 # Importing libraries
 from fastapi_app import start_uvicorn
-from dashboard.dashboard import get_sockets, bk_worker
+from dashboard.bokeh_app import get_sockets, bk_worker
 from config import BOKEH_URL, FASTAPI_URL
 
 from threading import Thread

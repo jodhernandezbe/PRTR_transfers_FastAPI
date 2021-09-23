@@ -6,7 +6,7 @@ from base import creating_session_engine
 import model
 from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
-from config import FASTAPI_PORT, FASTAPI_ADDR, BOKEH_URL, BOKEH_ADDR
+from config import FASTAPI_PORT, FASTAPI_ADDR, BOKEH_URL, FASTAPI_URL
 
 from fastapi import FastAPI, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
@@ -26,10 +26,23 @@ templates = Jinja2Templates(directory=templates_path)
 Engine, SessionLocal = creating_session_engine(check_same_thread=False)
 model.Base.metadata.create_all(bind=Engine)
 
-app = FastAPI(title='PRTR transfers summary',
-            description='This is an API that summarizes the information obtained by performing data engineering to three Pollutant Release and Transfer Register (​PRTR) systems. The three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the three PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>). Also, other GitHub repository has information about how to obtain the SQL database, the API, and the schemas/models for the PRTR transfers summary data (see <a href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">PRTR_transfers_FastAPI</a>).',
-            version='0.0.1',
-            docs_url="/documentation",
+
+app = FastAPI(title='PRTR Transfers Summary REST Services',
+            description=
+            
+            f'''This is an API that contains summary information for the data that were obtained by performing data engineering to three Pollutant Release and Transfer Register (​PRTR) systems. The three PRTR systems are the <a href="http://www.npi.gov.au/">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the three PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>).<br><p><a href="{FASTAPI_URL}">PRTR transfers summary - Website</a></p>
+            ''',
+            version='1',
+            contact={
+                    "name": "Jose D. Hernandez-Betancur",
+                    "url": "www.sustineritechem.com",
+                    "email": "jodhernandezbemj@gmail.com"
+                    },
+            license_info={
+                    "name": "GNU General Public License v3.0",
+                    "url": "https://github.com/jodhernandezbe/PRTR_transfers_FastAPI/blob/local/LICENSE",
+                        },
+            docs_url="/v1/api_documentation",
             redoc_url=None)
 
 static_path = f'{dir_path}/static'
@@ -125,7 +138,7 @@ def get_transfer_class_records(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse("table.html", context=context)
 
 
-@app.post('/records/',
+@app.post('/v1/records/',
         summary='PRTR transfers summary data',
         response_model=RecordResponseModel,
         responses = {
@@ -196,7 +209,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
     return JSONResponse(content=json_compatible_item_data)
 
 
-@app.post('/conditional_records/',
+@app.post('/v1/conditional_records/',
         summary='PRTR transfers summary data based on conditions',
         response_model=RecordResponseModel,
         responses = {
@@ -267,7 +280,6 @@ def start_uvicorn():
     uvicorn.run("fastapi_app:app", host=FASTAPI_ADDR,
                 port=FASTAPI_PORT, log_level="info",
                 reload=True)
-
 
 if __name__ == "__main__":
     start_uvicorn()
