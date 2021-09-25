@@ -3,15 +3,18 @@
 {% block content %}
 
 <div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
+    <div class="carousel-inner w-100">
+        <div class="carousel-item active w-100">
             <img class="d-block w-100" src="{{ url_for('static', path='img/industry.jpg') }}" alt="Industry">
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item w-100">
             <img class="d-block w-100" src="{{ url_for('static', path='img/pollution.jpg') }}" alt="Pollution">
         </div>
-        <div class="carousel-item">
+        <div class="carousel-item w-100">
             <img class="d-block w-100" src="{{ url_for('static', path='img/sewers.jpg') }}" alt="Sewers">
+        </div>
+        <div class="carousel-item w-100">
+            <img class="d-block w-100" src="{{ url_for('static', path='img/transport.jpg') }}" alt="Transport">
         </div>
         <div class="overlay">
             <div class="container">

@@ -17,8 +17,10 @@ function openFullscreen() {
 }
 
 
-$(function() {
-    var height = $(window).height() - ($("#header").outerHeight(true) - $("#footer").outerHeight(true));
-    $("#main").css("min-height",height+"px");
-    $(".carousel-inner img").css("max-height",height+"px");
+$(window).resize(function() {
+    if ( document.URL.includes("") ){
+        var height = $(window).height() - ($("#header").outerHeight(true) + $("#footer").outerHeight(true));
+        $("#main").css("min-height",height+"px");
+        $(".carousel-inner img").css("min-height",height+"px");
+    }
 });
