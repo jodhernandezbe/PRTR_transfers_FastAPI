@@ -20,7 +20,7 @@ function openFullscreen() {
 $(window).resize(function() {
     if ( document.URL.includes("") ){
         var height = $(window).height() - ($("#header").outerHeight(true) + $("#footer").outerHeight(true));
-        $("#main").css("min-height",height+"px");
-        $(".carousel-inner img").css("min-height",height+"px");
+        $("#main").css("height",height+"px");
+        $(".carousel-inner img").css("height",height+"px");
     }
 });
