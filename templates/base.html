@@ -19,17 +19,19 @@
     </head>
     <body>
 
-        <header class="sticky-top" id="header">
-            <nav class="navbar navbar-expand-lg navbar-dark">
+        <header class="sticky-top shadow-lg" id="header">
+            <nav class="navbar navbar-expand-lg navbar-dark navbar-fixed-top" style="z-index: 1;">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/">
-                        <img src="{{ url_for('static', path='img/logo.svg') }}" alt="PRTR logo">
+                        <img src="{{ url_for('static', path='img/logo.svg') }}" class="figure-img img-fluid" alt="PRTR logo">
                         <p class="d-sm-inline-block text-center text-sm-left">
                             PRTR transfers <span style="color: #c4c2c2; font-weight: bolder;">summary</span>
                         </p>
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span> </span>
+                        <span> </span>
+                        <span> </span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto mb-2 mb-lg-0">
@@ -53,10 +55,10 @@
                                 <a class="nav-link" href="/dashboard/">DataViz</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/v1/api_documentation/">REST services</a>
+                                <a class="nav-link" href="/v1/api_documentation/" rel="noopener noreferrer" target="_blank">REST services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI">GitHub repository</a>
+                                <a class="nav-link" href="https://github.com/jodhernandezbe/PRTR_transfers_FastAPI" rel="noopener noreferrer" target="_blank">GitHub repository</a>
                             </li>
                         </ul>
                     </div>
@@ -64,7 +66,7 @@
             </nav>
         </header>
 
-        <main class="d-flex justify-content-center" id="main">
+        <main class="d-flex justify-content-center" id="main" style="z-index: -10;">
             {% block content %}
             {% endblock %}
         </main>
@@ -83,13 +85,13 @@
                         <!-- <div class="mb-5 flex-center"> -->
                 
                             <!-- Facebook -->
-                            <a href="https://www.facebook.com/jodhernandezbe" class="fa fa-facebook"></a>
+                            <a href="https://www.facebook.com/jodhernandezbe" class="fa fa-facebook" rel="noopener noreferrer" target="_blank"></a>
                             <!-- Twitter -->
-                            <a href="https://twitter.com/jodhernandezbe" class="fa fa-twitter"></a>
+                            <a href="https://twitter.com/jodhernandezbe" class="fa fa-twitter" rel="noopener noreferrer" target="_blank"></a>
                             <!--Linkedin -->
-                            <a href="https://www.linkedin.com/in/jodhernandezbe/" class="fa fa-linkedin"></a>
+                            <a href="https://www.linkedin.com/in/jodhernandezbe/" class="fa fa-linkedin" rel="noopener noreferrer" target="_blank"></a>
                             <!--Instagram-->
-                            <a href="https://www.instagram.com/jodhernandezbe/" class="fa fa-instagram"></a>
+                            <a href="https://www.instagram.com/jodhernandezbe/" class="fa fa-instagram" rel="noopener noreferrer" target="_blank"></a>
                         <!-- </div> -->
                     </div>
                     <!-- Grid column -->
@@ -103,7 +105,7 @@
 
             <!-- Copyright -->
             <div class="footer-copyright text-center p-2">© 2021 Copyright:
-                <a href="www.sustainableprosys.com" id="web_site">SustainableProSys.com</a>
+                <a href="https://sustainableprosys.com/" id="web_site" rel="noopener noreferrer" target="_blank">SustainableProSys.com</a>
             </div>
             <!-- Copyright -->
         

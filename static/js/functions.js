@@ -5,8 +5,8 @@ $(document).ready( function () {
     } );
 
 /* View in fullscreen */
-var elem = document.getElementById("dash_col");
-function openFullscreen() {
+function openFullscreen(id) {
+    var elem = document.getElementById(id);
     if (elem.requestFullscreen) {
     elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -19,8 +19,9 @@ function openFullscreen() {
 
 $(window).resize(function() {
     if ( document.URL.includes("") ){
-        var height = $(window).height() - ($("#header").outerHeight(true) + $("#footer").outerHeight(true));
-        $("#main").css("height",height+"px");
-        $(".carousel-inner img").css("height",height+"px");
+        var height = $(window).height() - ($("#header").outerHeight() + $("#footer").outerHeight());
+        $("#main").css("min-height",height+"px");
+        $(".carousel-inner img").css("min-height",height+"px");
     }
 });
+

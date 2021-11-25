@@ -48,6 +48,7 @@ def creating_dashboard(doc):
 
     # Reading the data
     df_transfers = pd.read_sql_query(sql_query_record, Engine)
+    df_transfers.sort_values(by='reporting_year', inplace=True)
     df_transfers['reporting_year'] = df_transfers['reporting_year'].apply(lambda x: str(x))
 
     substances = df_transfers['generic_substance'].unique().tolist()
@@ -70,6 +71,7 @@ def  get_sockets():
     Returns:
         sockets, port -- sockets and port bind to
     """
+
     _sockets, _port = bind_sockets('0.0.0.0', 0)
     set_bokeh_port(_port)
     return _sockets, _port
