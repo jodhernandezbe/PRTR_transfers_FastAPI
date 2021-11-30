@@ -84,6 +84,7 @@ h3 {
 
 #eerd:hover {
     transform: scale(1.02);
+    filter: brightness(110%);
 }
 
 .fa {

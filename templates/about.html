@@ -20,8 +20,10 @@
                     <img src="{{ url_for('static', path='img/PRTR_transfers_summary_EERD.svg') }}"
                         class="figure-img img-fluid rounded"
                         alt="EERD"
-                        id="eerd"
-                        onclick="openFullscreen('eerd');">
+                        id="eerd">
+                    <div class="col-auto pt-4 pb-2 pl-0 text-start">
+                        <span onclick="openFullscreen('eerd');" class="text-fullscreen"><u>Full screen access</u></span>
+                    </div>
                     <figcaption style="font-weight: lighter; color: #757575; font-size: medium; font-style: italic;">
                         The enhanced entity-relationship diagram (EERD) of the PRTR_transfers_summary database.
                     </figcaption>

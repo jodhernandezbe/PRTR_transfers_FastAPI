@@ -3,7 +3,7 @@
 
 # Importing libraries
 from bokeh.models.layouts import Column
-from bokeh.palettes import Category20_16
+from bokeh.palettes import Set1
 from bokeh.models import (Select, MultiSelect, Panel,
                         CheckboxGroup, HoverTool,
                         ColumnDataSource, FuncTickFormatter)
@@ -14,8 +14,7 @@ import pandas as pd
 import numpy as np
 import math
 
-Category20_16 = list(Category20_16)
-Category20_16.sort()
+Set1 = [c for i, c in enumerate(list(Set1[5])) if i in [1, 2, 4]]
 
 def creating_tab_1(df_transfers, substances, countries,
                    waste_managements, years):
@@ -27,7 +26,7 @@ def creating_tab_1(df_transfers, substances, countries,
 
     # Countries and their colors
     postions = [-0.25, 0.0, 0.25]
-    country_colors = {country: Category20_16[i] for i, country in enumerate(countries)}
+    country_colors = {country: Set1[i] for i, country in enumerate(countries)}
 
     def make_dataset(initial_wm,
                     opt_substance='50000 : Formaldehyde',
@@ -65,7 +64,7 @@ def creating_tab_1(df_transfers, substances, countries,
 
         # Reset indexes
         table.reset_index(inplace=True)
-        
+
         src = ColumnDataSource(data=table)
 
         return src
@@ -101,7 +100,7 @@ def creating_tab_1(df_transfers, substances, countries,
         TOOLTIPS = [
                     ('Reporting year', '@reporting_year'),
                     ('Country', '$name'),
-                    ('Total transfer amount [kg/yr]', '@$name{0,0.00}')
+                    ('Total transfer amount [kg/yr]', '@$name{0,0}')
                     ]
         hover = HoverTool(tooltips=TOOLTIPS,
 						  mode='mouse')
@@ -194,7 +193,6 @@ def creating_tab_1(df_transfers, substances, countries,
                             name='Waste management activity')
     wm_checkbox.on_change('active', update_data)
 
-
     # Initial transfers and data source
     initial_wm = [wm_checkbox.labels[i] for i in wm_checkbox.active]
     src = make_dataset(initial_wm,
@@ -202,17 +200,15 @@ def creating_tab_1(df_transfers, substances, countries,
                     opt_countries=country_selector.value)
     plot = make_plot(src)
 
-
     # Put controls in a single element
-    controls = row(country_selector,
-                        substance_selector,
-                        wm_checkbox)
+    controls = row(substance_selector,
+                    country_selector,
+                    wm_checkbox)
 
     # Create a row layout
     layout = Column(controls, plot, sizing_mode="stretch_both")
 
-
     # Make a tab with the layout 
-    tab = Panel(child=layout, title='Tab 1')
+    tab = Panel(child=layout, title='Bar plot')
 
     return tab
