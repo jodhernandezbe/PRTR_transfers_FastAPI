@@ -75,8 +75,8 @@ def creating_dashboard(doc):
     countries = df_transfers['country'].unique().tolist()
     waste_managements = df_transfers['transfer_class_wm_hierarchy_name'].unique().tolist()
     transfer_classes = df_transfers['generic_transfer_class'].unique().tolist()
+    transfer_classes.sort()
     years = df_transfers['reporting_year'].unique().tolist()
-    industry_sectors = df_transfers['generic_sector'].unique().tolist()
 
     # Creating each of the tabs
     tab1 = creating_tab_1(df_transfers, substances, countries,
@@ -84,7 +84,7 @@ def creating_dashboard(doc):
     tab2 = creating_tab_2(df_transfers, substances, countries,
                         transfer_classes, years)
     tab3 = creating_tab_3(df_transfers, substances, countries,
-                        transfer_classes, years, industry_sectors)
+                        years)
 
     # Put all the tabs into one application
     tabs = Tabs(tabs=[tab1, tab2, tab3])

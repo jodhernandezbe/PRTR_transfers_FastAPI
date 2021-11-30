@@ -3,21 +3,20 @@
 
 # Importing libraries
 from bokeh.models.layouts import Column
-from bokeh.palettes import mpl
+from bokeh.palettes import Blues
 from bokeh.models import (Panel, Select, CheckboxGroup, RangeSlider,
-                        ColumnDataSource, HoverTool, Label,
+                        ColumnDataSource, HoverTool,
                         LinearColorMapper, BasicTicker, ColorBar)
 from bokeh.layouts import row
 from bokeh.plotting import figure
-from bokeh.transform import transform
+from bokeh.transform import transform, dodge
 import numpy as np
 import math
 
+palette = list(Blues[256])
+palette.reverse()
 
-palette = mpl["Plasma"][256]
-
-def creating_tab_3(df_transfers, substances, countries,
-                transfer_classes, years, industry_sectors):
+def creating_tab_3(df_transfers, substances, countries, years):
     '''
     Fuction to make the third tab for the dashboard
     '''
@@ -43,14 +42,15 @@ def creating_tab_3(df_transfers, substances, countries,
         columns = ['total_transfer_amount_kg','number_of_facilities', 'generic_transfer_class', 'generic_sector']
         df_to_plot = df_to_plot[columns]
 
+
         # Suming
         df_to_plot =  df_to_plot.groupby(['generic_transfer_class', 'generic_sector'], as_index=False).sum()
         df_to_plot['generic_transfer_class_number'] = df_to_plot['generic_transfer_class'].str.extract(r'(M[0-9]{1,2})')
-        df_to_plot['generic_sector_number'] = df_to_plot['generic_sector'].str.extract(r'([0-9]{1,2})').astype(int)
+        df_to_plot['generic_sector_number'] = df_to_plot['generic_sector'].str.extract(r'([0-9]{1,2})')
         df_to_plot.sort_values(by='generic_sector_number', inplace=True)
         df_to_plot = df_to_plot[df_to_plot['total_transfer_amount_kg'] != 0]
         df_to_plot['total_transfer_amount_kg_log'] = df_to_plot['total_transfer_amount_kg'].apply(lambda x: np.log(x))
-    
+
         # Reset indexes
         df_to_plot.reset_index(inplace=True, drop=True)
 
@@ -60,17 +60,18 @@ def creating_tab_3(df_transfers, substances, countries,
 
     def make_plot(src):
 
-        x_range = list(set(src.data['generic_sector_number']))
+        x_range = [int(x) for x in set(src.data['generic_sector_number'])]
         x_range.sort()
-        x_range = list(str(x) for x in x_range)
+        x_range = [str(x) for x in x_range]
 
         plot = figure(title='Relationship between industry sector and transfer class',
                     tools='wheel_zoom,pan,box_zoom,reset,save',
                     sizing_mode="stretch_both",
                     x_range=x_range,
-                    y_range=list(x for x in set(src.data['generic_transfer_class_number'])),
+                    y_range=list(set(src.data['generic_transfer_class_number'])),
                     y_axis_label='Generic transfer class',
                     x_axis_label='Generic industry sector',
+                    y_axis_location="right"
                     )
 
         # Add legend
@@ -78,23 +79,11 @@ def creating_tab_3(df_transfers, substances, countries,
                                     low=min(src.data['total_transfer_amount_kg_log']),
                                     high=max(src.data['total_transfer_amount_kg_log'])
                                     )
-        color_bar = ColorBar(
-                color_mapper=mapper,
-                location=(0, 0),
-                ticker=BasicTicker(desired_num_ticks=len(palette)),
-                title='ln(total kgs transferred)',
-                title_text_align='center',
-                title_text_font_size='14pt',
-                title_text_font_style='bold',
-                label_standoff=12,
-                border_line_color=None
-                )
-        plot.add_layout(color_bar, 'right')
 
-        rectwidth = 0.9
-        plot.rect(y='generic_transfer_class_number', x='generic_sector_number',
-                width=rectwidth, height=rectwidth, source=src,
-                line_width=1,
+        rectwidth = 1
+        plot.rect(y='generic_transfer_class_number',
+                x=dodge('generic_sector_number', 0, range=plot.x_range),
+                width=rectwidth, height=rectwidth, source=src,line_color=None,
                 fill_color=transform('total_transfer_amount_kg_log', mapper))
 
         # Hover tool with vline mode
@@ -108,6 +97,22 @@ def creating_tab_3(df_transfers, substances, countries,
 						  mode='mouse')
         plot.add_tools(hover)
 
+        # Add color bar
+        color_bar = ColorBar(
+                color_mapper=mapper,
+                location=(0, 0),
+                ticker=BasicTicker(desired_num_ticks=10),
+                title='                        ln(total kgs transferred)',
+                title_text_align='left',
+                title_text_font_size='14pt',
+                title_text_font_style='bold',
+                title_standoff=12,
+                label_standoff=12,
+                major_tick_line_color='black',
+                major_label_text_font_size='10pt',
+                bar_line_color='black',
+                )
+        plot.add_layout(color_bar, 'left')
 
         # Styling
         plot = style(plot)
@@ -131,11 +136,20 @@ def creating_tab_3(df_transfers, substances, countries,
         plot.title.text_font = 'serif'
 
         # Axis titles
+        plot.axis.axis_line_color = 'black'
+        plot.axis.major_label_standoff = 0
+        plot.axis.major_tick_line_color = 'black'
         plot.xaxis.axis_label_text_font_size = '14pt'
+        plot.xaxis.major_label_text_font_size = '10pt'
+        plot.xaxis.axis_label_standoff = 12
+        plot.xaxis.major_label_standoff = 12
         plot.xaxis.axis_label_text_font_style = 'bold'
+        plot.xaxis.major_label_orientation = math.pi / 2
         plot.yaxis.axis_label_text_font_size = '14pt'
+        plot.yaxis.major_label_text_font_size = '10pt'
+        plot.yaxis.axis_label_standoff = 12
+        plot.yaxis.major_label_standoff = 12
         plot.yaxis.axis_label_text_font_style = 'bold'
-
         plot.grid.grid_line_color = None
 
         return plot
@@ -169,6 +183,7 @@ def creating_tab_3(df_transfers, substances, countries,
     src = make_dataset(year_rangeslider.value,
                     opt_substance=substance_selector.value,
                     opt_countries=[country_checkbox.labels[i] for i in country_checkbox.active])
+                    
     plot = make_plot(src)
 
      # Put controls in a single element

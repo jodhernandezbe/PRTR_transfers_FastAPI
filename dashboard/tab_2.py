@@ -56,7 +56,7 @@ def creating_tab_2(df_transfers, substances, countries,
                 df_to_plot.append(new_row, ignore_index=True)
         
         # Other aspects
-        df_to_plot.sort_values(by='generic_transfer_class', inplace=True)
+        df_to_plot.sort_values(by=['number_of_facilities'], inplace=True, ascending=False)
         df_to_plot.reset_index(inplace=True, drop=True)
         df_to_plot['color'] = df_to_plot['generic_transfer_class'].apply(lambda x: transfer_class_colors[x])
         percentages = [0]  + df_to_plot['percentage'].cumsum().tolist()
