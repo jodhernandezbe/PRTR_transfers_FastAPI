@@ -25,19 +25,10 @@ The EERD model in the following figure represents the PRTR_transfers_summary dat
 
 ### Creating conda environment
 
-A conda environment can be created by executing any of the following commands:
+A conda environment can be created by executing the following command:
 
-<ul>
-  <li>
-    
-     conda create --name PRTR_FastAPI --file requirements.txt
-  </li>
-  <li>
-    Recommended:
       
     conda env create -n PRTR_FastAPI -f environment.yml
-  </li>
-</ul>
 
 The above commands are written assuming that you are in the folder containing the .txt and .yml files, i.e. the root folder PRTR_transfers_FastAPI. 
 
