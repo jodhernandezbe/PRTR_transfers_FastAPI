@@ -71,7 +71,7 @@ def creating_tab_3(df_transfers, substances, countries, years):
                     y_range=list(set(src.data['generic_transfer_class_number'])),
                     y_axis_label='Generic transfer class',
                     x_axis_label='Generic industry sector',
-                    y_axis_location="right"
+                    y_axis_location="right",
                     )
 
         # Add legend
@@ -97,12 +97,15 @@ def creating_tab_3(df_transfers, substances, countries, years):
 						  mode='mouse')
         plot.add_tools(hover)
 
-        # Add color bar
+        # Styling
+        plot = style(plot)
+
+         # Add color bar
         color_bar = ColorBar(
                 color_mapper=mapper,
                 location=(0, 0),
                 ticker=BasicTicker(desired_num_ticks=10),
-                title='                        ln(total kgs transferred)',
+                title='ln[total kgs transferred]',
                 title_text_align='left',
                 title_text_font_size='14pt',
                 title_text_font_style='bold',
@@ -113,9 +116,6 @@ def creating_tab_3(df_transfers, substances, countries, years):
                 bar_line_color='black',
                 )
         plot.add_layout(color_bar, 'left')
-
-        # Styling
-        plot = style(plot)
 
         return plot
 
@@ -151,6 +151,9 @@ def creating_tab_3(df_transfers, substances, countries, years):
         plot.yaxis.major_label_standoff = 12
         plot.yaxis.axis_label_text_font_style = 'bold'
         plot.grid.grid_line_color = None
+
+        plot.background_fill_color = "beige"
+        plot.background_fill_alpha = 0.6
 
         return plot
 
