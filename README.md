@@ -30,7 +30,7 @@ A conda environment can be created by executing the following command:
       
     conda env create -n PRTR_FastAPI -f environment.yml
 
-The above commands are written assuming that you are in the folder containing the .txt and .yml files, i.e. the root folder PRTR_transfers_FastAPI. 
+The above command is written assuming that you are in the folder containing the .yml file, i.e. the root folder PRTR_transfers_FastAPI. 
 
 ### Ovoiding ModuleNotFoundError and ImportError
 
