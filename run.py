@@ -11,7 +11,7 @@ from threading import Thread
 
 def run():
     '''
-    
+    Run PRTR_transfers_summary
     '''
 
     # get sockets, so bkapp and app can talk
