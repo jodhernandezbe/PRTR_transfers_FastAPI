@@ -83,7 +83,7 @@ def creating_tab_2(df_transfers, substances, countries,
                     x_range=(-1.1, 1.1),
                     y_range=(-1.1, 1.1))
 
-        plot.annular_wedge(x=0.1, y=0, inner_radius='inner_radius',
+        plot.annular_wedge(x=0, y=0, inner_radius='inner_radius',
             outer_radius='outer_radius', source=src,
             start_angle='start',
             end_angle='end',  line_color="white",
