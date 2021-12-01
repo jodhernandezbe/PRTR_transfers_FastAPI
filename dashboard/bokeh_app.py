@@ -126,5 +126,5 @@ if __name__ == '__main__':
 
     BK_SOCKETS, BK_PORT = get_sockets()
 
-    t = Thread(target=bk_worker, args=[BK_SOCKETS, BK_PORT], daemon=True)
+    t = Thread(target=bk_worker, args=[BK_SOCKETS, BK_PORT], daemon=False)
     t.start()
