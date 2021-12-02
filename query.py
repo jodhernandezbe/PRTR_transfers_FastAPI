@@ -8,14 +8,14 @@ from sqlalchemy.orm import Session
 import re
 
 
-def get_records(db: Session, fields):
+def get_records(db: Session, fields, skip: int = 0, limit: int = 5):
     '''
     Function to make a query for obtaining information
     considering the PRTR country
     '''
 
     results = db.query(Record).filter_by(**{k: v for k, v in fields.items() if v is not None})
-    results = results.first()
+    results = results.offset(skip).limit(limit).all()
 
     return results
 

@@ -7,12 +7,13 @@ import model
 from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
 
-from fastapi import FastAPI, Depends, HTTPException, Body, Request
+from fastapi import FastAPI, Depends, HTTPException, Body, Request, Query
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from typing import Optional
 from bokeh.embed import server_document
 import os
 
@@ -191,14 +192,22 @@ def read_record(record_request: RecordRequestModel = Body(...,
                                     }
                         }
                                                         ),
-                db: Session = Depends(get_db)
+                db: Session = Depends(get_db),
+                skip: Optional[int] = Query(0),
+                limit: Optional[int] = Query(5)
                 ):
     '''
     Fucntion to HTTP request and response for records
+
+    In addition to the request body parameters, you can establish "skip" and "limit" query parameters. For example:
+
+    https://prtr-transfers-summary.herokuapp.com/v1/records/?skip=0&limit=5
+
+    These query parameters help prevent Heroku free dyno from crashing
     '''
 
     record_request_dict = record_request.dict()
-    records = get_records(db, record_request_dict)
+    records = get_records(db, record_request_dict, skip=skip, limit=limit)
 
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")
@@ -259,14 +268,17 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
                                 
                                                                                     ),
                             db: Session = Depends(get_db),
-                            skip: int = 0, limit: int = 10
+                            skip: Optional[int] = Query(0),
+                            limit: Optional[int] = Query(10)
                             ):
     '''
     Function to HTTP request and response for records based on conditions
 
-    In addition to the request body parameters, you can establish "skip" and "limit" query parameters:
+    In addition to the request body parameters, you can establish "skip" and "limit" query parameters. For example:
 
     https://prtr-transfers-summary.herokuapp.com/v1/conditional_records/?skip=0&limit=5
+
+    These query parameters help prevent Heroku free dyno from crashing
     '''
 
     record_request_dict = record_request.dict()
