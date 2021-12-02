@@ -82,6 +82,8 @@ If you prefer to save the path to the PRTR_transfers_FastAPI project folder as a
 
 # Local deployment
 
+Run the following command for local deployment
 ```
 python run.py
 ```
+Go to http://127.0.0.1:8000
