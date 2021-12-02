@@ -6,19 +6,11 @@ from base import creating_session_engine
 from tab_1 import creating_tab_1
 from tab_2 import creating_tab_2
 from tab_3 import creating_tab_3
-from config import set_bokeh_port, FASTAPI_PORT, FASTAPI_ADDR, BOKEH_ADDR, FASTAPI_URL
 
 import pandas as pd
 from bokeh.models.widgets import Tabs
-import asyncio
-from bokeh.server.server import BaseServer
-from bokeh.server.tornado import BokehTornado
-from tornado.httpserver import HTTPServer
-from tornado.ioloop import IOLoop
-from threading import Thread
-from bokeh.application import Application
-from bokeh.application.handlers import FunctionHandler
-from bokeh.server.util import bind_sockets
+from bokeh.io import curdoc
+
 
 def open_dataframe():
     '''
@@ -64,7 +56,7 @@ def open_dataframe():
     return df
 
 
-def creating_dashboard(doc):
+def creating_dashboard():
     '''
     Function to create the dashboard
     '''
@@ -90,41 +82,8 @@ def creating_dashboard(doc):
     tabs = Tabs(tabs=[tab1, tab2, tab3])
 
 
-    doc.add_root(tabs)
+    curdoc().add_root(tabs)
 
 
-def  get_sockets():
-    """bind to available socket in this system
-    Returns:
-        sockets, port -- sockets and port bind to
-    """
-
-    _sockets, _port = bind_sockets('0.0.0.0', 0)
-    set_bokeh_port(_port)
-    return _sockets, _port
-
-
-def bk_worker(sockets, bokeh_port):
-
-    asyncio.set_event_loop(asyncio.new_event_loop())
-
-    websocket_origins = [f"{BOKEH_ADDR}:{bokeh_port}", f"{FASTAPI_ADDR}:{FASTAPI_PORT}", FASTAPI_URL]
-    _creating_dashboard = Application(FunctionHandler(creating_dashboard))
-
-    bokeh_tornado = BokehTornado({'/bkapp': _creating_dashboard},
-                            extra_websocket_origins=websocket_origins,
-                            **{'use_xheaders': True})
-    bokeh_http = HTTPServer(bokeh_tornado)
-    bokeh_http.add_sockets(sockets)
-
-    server = BaseServer(IOLoop.current(), bokeh_tornado, bokeh_http)
-    server.start()
-    server.io_loop.start()
-
-
-if __name__ == '__main__':
-
-    BK_SOCKETS, BK_PORT = get_sockets()
-
-    t = Thread(target=bk_worker, args=[BK_SOCKETS, BK_PORT], daemon=False)
-    t.start()
+# Running the dashboard
+creating_dashboard()
