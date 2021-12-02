@@ -140,7 +140,7 @@ def get_transfer_class_records(request: Request, db: Session = Depends(get_db)):
 
 @app.post('/v1/records/',
         summary='PRTR transfers summary data',
-        tags=['records'],
+        tags=['Records'],
         response_model=RecordResponseModel,
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
@@ -214,18 +214,18 @@ def read_record(record_request: RecordRequestModel = Body(...,
         - limit: integer
 
     Returns a JSON object with the following fields:
-        - reporting_year: integer
-        - country: string
-        - generic_substance_id: string
-        - generic_sector_code: integer
-        - generic_transfer_class_id: string
-        - number_of_facilities: integer
-        - total_transfer_amount_kg: float
-        - average_transfer_amount_kg: float
-        - median_transfer_amount_kg: float
-        - std_transfer_amount_kg: float
-        - max_transfer_amount_kg: float
-        - min_transfer_amount_kg: float
+    - reporting_year: integer
+    - country: string
+    - generic_substance_id: string
+    - generic_sector_code: integer
+    - generic_transfer_class_id: string
+    - number_of_facilities: integer
+    - total_transfer_amount_kg: float
+    - average_transfer_amount_kg: float
+    - median_transfer_amount_kg: float
+    - std_transfer_amount_kg: float
+    - max_transfer_amount_kg: float
+    - min_transfer_amount_kg: float
     '''
 
     record_request_dict = record_request.dict()
@@ -241,7 +241,7 @@ def read_record(record_request: RecordRequestModel = Body(...,
 
 @app.post('/v1/conditional_records/',
         summary='PRTR transfers summary data based on conditions',
-        tags=['records'],
+        tags=['Records'],
         response_model=RecordResponseModel,
         responses = {
                     200: {'description': 'JSON output obtained based on user input parameter(s)',
@@ -315,18 +315,18 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
         - limit: integer
 
     Returns a JSON object with the following fields:
-        - reporting_year: integer
-        - country: string
-        - generic_substance_id: string
-        - generic_sector_code: integer
-        - generic_transfer_class_id: string
-        - number_of_facilities: integer
-        - total_transfer_amount_kg: float
-        - average_transfer_amount_kg: float
-        - median_transfer_amount_kg: float
-        - std_transfer_amount_kg: float
-        - max_transfer_amount_kg: float
-        - min_transfer_amount_kg: float
+    - reporting_year: integer
+    - country: string
+    - generic_substance_id: string
+    - generic_sector_code: integer
+    - generic_transfer_class_id: string
+    - number_of_facilities: integer
+    - total_transfer_amount_kg: float
+    - average_transfer_amount_kg: float
+    - median_transfer_amount_kg: float
+    - std_transfer_amount_kg: float
+    - max_transfer_amount_kg: float
+    - min_transfer_amount_kg: float
     '''
 
     record_request_dict = record_request.dict()
