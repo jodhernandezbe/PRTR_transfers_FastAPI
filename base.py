@@ -15,7 +15,7 @@ def creating_session_engine(check_same_thread=True):
     Function to create SQLite session and engine
     '''
 
-    Engine = create_engine(f'sqlite:///{dir_path}/output/PRTR_transfers_summary.db',
+    Engine = create_engine(f'sqlite:///{dir_path}/PRTR_transfers_summary.db',
                         connect_args={"check_same_thread": check_same_thread})
 
     Session = sessionmaker(bind=Engine, autocommit=False, autoflush=False)

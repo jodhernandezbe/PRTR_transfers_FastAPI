@@ -6,11 +6,9 @@ from base import creating_session_engine
 import model
 from query import get_records, get_records_by_conditions, getting_list_of_lists
 from schema import RecordRequestModel, RecordResponseModel, RecordRequestInequalityModel
-from config import FASTAPI_PORT, FASTAPI_ADDR, BOKEH_URL, FASTAPI_URL
 
 from fastapi import FastAPI, Depends, HTTPException, Body, Request
 from sqlalchemy.orm import Session
-import uvicorn
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -30,7 +28,7 @@ model.Base.metadata.create_all(bind=Engine)
 app = FastAPI(title='PRTR Transfers Summary REST Services',
             description=
             
-            f'''This is an API that contains summary information for the data that were obtained by performing data engineering to three Pollutant Release and Transfer Register (​PRTR) systems. The three PRTR systems are the <a href="http://www.npi.gov.au/" rel="noopener noreferrer" target="_blank">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html" rel="noopener noreferrer" target="_blank">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program" rel="noopener noreferrer" target="_blank">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the three PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>).<br><p><a href="{FASTAPI_URL}">PRTR transfers summary - Website</a></p>
+            f'''This is an API that contains summary information for the data that were obtained by performing data engineering to three Pollutant Release and Transfer Register (​PRTR) systems. The three PRTR systems are the <a href="http://www.npi.gov.au/" rel="noopener noreferrer" target="_blank">National Pollutant Inventory (NPI)</a>, the <a href="https://www.canada.ca/en/services/environment/pollution-waste-management/national-pollutant-release-inventory.html" rel="noopener noreferrer" target="_blank">National Pollutant Release Inventory (NPRI)</a>, and the <a href="https://www.epa.gov/toxics-release-inventory-tri-program" rel="noopener noreferrer" target="_blank">Toxics Release Inventory (TRI)</a>. A GitHub repository contains the Python Scripts that run the generic data engineering procedure for the three PRTR systems (see <a href="https://github.com/jodhernandezbe/PRTR_transfers">PRTR_transfers</a>).<br><p><a href="https://prtr-transfers-summary.herokuapp.com">PRTR transfers summary - Website</a></p>
             ''',
             version='1',
             contact={
@@ -88,7 +86,8 @@ def get_sector_records(request: Request):
                             'content': {'text/html': {}}}}
         )
 def get_sector_records(request: Request):
-    script = server_document(f'{BOKEH_URL}/bkapp', resources=None)
+    script = server_document('https://prtr-transfers-summary-bokeh.herokuapp.com/bokeh_app',
+                            resources=None)
     return templates.TemplateResponse("dashboard.html", {"request": request, 'script': script})
         
 
@@ -274,13 +273,3 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
     json_compatible_item_data = jsonable_encoder(records)
     
     return JSONResponse(content=json_compatible_item_data)
-
-
-def start_uvicorn():
-    uvicorn.run("fastapi_app:app", host=FASTAPI_ADDR,
-                port=FASTAPI_PORT, log_level="info",
-                reload=True)
-
-if __name__ == "__main__":
-    start_uvicorn()
-
