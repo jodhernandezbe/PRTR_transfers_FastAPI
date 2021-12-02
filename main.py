@@ -258,14 +258,19 @@ def read_record_with_condition(record_request: RecordRequestInequalityModel = Bo
                         }
                                 
                                                                                     ),
-                            db: Session = Depends(get_db)
+                            db: Session = Depends(get_db),
+                            skip: int = 0, limit: int = 10
                             ):
     '''
     Function to HTTP request and response for records based on conditions
+
+    In addition to the request body parameters, you can establish "skip" and "limit" query parameters:
+
+    https://prtr-transfers-summary.herokuapp.com/v1/conditional_records/?skip=0&limit=5
     '''
 
     record_request_dict = record_request.dict()
-    records = get_records_by_conditions(db, record_request_dict)
+    records = get_records_by_conditions(db, record_request_dict, skip=skip, limit=limit)
 
     if not records:
         raise HTTPException(status_code=404, detail="Record not found")

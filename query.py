@@ -15,12 +15,12 @@ def get_records(db: Session, fields):
     '''
 
     results = db.query(Record).filter_by(**{k: v for k, v in fields.items() if v is not None})
-    results = results.all()
+    results = results.first()
 
     return results
 
 
-def get_records_by_conditions(db: Session, fields):
+def get_records_by_conditions(db: Session, fields, skip: int = 0, limit: int = 10):
     '''
     Function to get records based on threshold
     '''
@@ -56,7 +56,8 @@ def get_records_by_conditions(db: Session, fields):
                 results = results.filter(cols_for_queries[key] <= number)
             elif inequality == '!=':
                 results = results.filter(cols_for_queries[key] != number)
-    results = results.all()
+
+    results = results.offset(skip).limit(limit).all()
     
     return results
 
