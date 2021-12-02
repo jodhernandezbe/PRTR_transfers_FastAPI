@@ -3,10 +3,10 @@
 
 # Importing libraries
 from base import creating_session_engine
-from dashboard.tab_1 import creating_tab_1
-from dashboard.tab_2 import creating_tab_2
-from dashboard.tab_3 import creating_tab_3
-from config import set_bokeh_port, FASTAPI_PORT, FASTAPI_ADDR, BOKEH_ADDR
+from tab_1 import creating_tab_1
+from tab_2 import creating_tab_2
+from tab_3 import creating_tab_3
+from config import set_bokeh_port, FASTAPI_PORT, FASTAPI_ADDR, BOKEH_ADDR, FASTAPI_URL
 
 import pandas as pd
 from bokeh.models.widgets import Tabs
@@ -108,7 +108,7 @@ def bk_worker(sockets, bokeh_port):
 
     asyncio.set_event_loop(asyncio.new_event_loop())
 
-    websocket_origins = [f"{BOKEH_ADDR}:{bokeh_port}", f"{FASTAPI_ADDR}:{FASTAPI_PORT}"]
+    websocket_origins = [f"{BOKEH_ADDR}:{bokeh_port}", f"{FASTAPI_ADDR}:{FASTAPI_PORT}", FASTAPI_URL]
     _creating_dashboard = Application(FunctionHandler(creating_dashboard))
 
     bokeh_tornado = BokehTornado({'/bkapp': _creating_dashboard},
