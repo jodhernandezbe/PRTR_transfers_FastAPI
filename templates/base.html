@@ -14,7 +14,7 @@
         {% endblock %}
 
         <title>PRTR transfers summary</title>
-        <link rel = "icon" href="{{ url_for('static', path='img/logo.ico') }}" type = "image/x-icon">
+        <link rel = "icon" href="{{ url_for('static', path='img/logo.ico') }}" type = "image/x-icon" class="figure-img img-fluid">
     
     </head>
     <body>
@@ -72,27 +72,22 @@
         </main>
 
         <!-- Footer -->
-        <footer class="page-footer" id="footer">
+        <footer class="page-footer pt-3" id="footer">
 
             <!-- Footer Elements -->
             <div class="container-fluid" align="center">
         
                 <!-- Grid row-->
-                <div class="row">
+                <div class="row justify-content-center">
             
                     <!-- Grid column -->
-                    <div class="col w-100">
+                    <div class="col-3 h-100 align-middle">
                         <!-- <div class="mb-5 flex-center"> -->
-                
-                            <!-- Facebook -->
-                            <a href="https://www.facebook.com/jodhernandezbe" class="fa fa-facebook" rel="noopener noreferrer" target="_blank"></a>
-                            <!-- Twitter -->
-                            <a href="https://twitter.com/jodhernandezbe" class="fa fa-twitter" rel="noopener noreferrer" target="_blank"></a>
-                            <!--Linkedin -->
-                            <a href="https://www.linkedin.com/in/jodhernandezbe/" class="fa fa-linkedin" rel="noopener noreferrer" target="_blank"></a>
-                            <!--Instagram-->
-                            <a href="https://www.instagram.com/jodhernandezbe/" class="fa fa-instagram" rel="noopener noreferrer" target="_blank"></a>
+                        <img src="{{ url_for('static', path='img/usal.png') }}" class="figure-img img-fluid" alt="USAL">
                         <!-- </div> -->
+                    </div>
+                    <div class="col-2 h-100 align-middle pt-1">
+                        <img src="{{ url_for('static', path='img/epa.png') }}" class="figure-img img-fluid" alt="EPA">
                     </div>
                     <!-- Grid column -->
             
@@ -101,14 +96,13 @@
         
             </div>
             <!-- Footer Elements -->
-        
 
             <!-- Copyright -->
-            <div class="footer-copyright text-center p-2">© 2021 Copyright:
-                <a href="https://sustainableprosys.com/" id="web_site" rel="noopener noreferrer" target="_blank">SustainableProSys.com</a>
+            <div class="footer-copyright text-center pb-2">© 2021 Copyright
+                <!-- <a href="https://sustainableprosys.com/" id="web_site" rel="noopener noreferrer" target="_blank">SustainableProSys.com</a> -->
             </div>
             <!-- Copyright -->
-        
+
         </footer>
         <!-- Footer -->
 
