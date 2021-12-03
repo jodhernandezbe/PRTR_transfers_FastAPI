@@ -29,5 +29,16 @@ if ( window.location.pathname == '/' ){
         $(".carousel-inner img").css("width",width+"px");
         $(".carousel-inner").css("width",width+"px");
         $(".carousel").css("width",width+"px");
+    } else {
+        var height =  0.3*($("#header").outerHeight() + $("#footer").outerHeight());
+        $("#main").css("min-height",height+"px");
+        $(".carousel-inner img").css("min-height",height+"px");
+        $(".carousel-inner").css("min-height",height+"px");
+        $(".carousel").css("min-height",height+"px");
+        var width = $(window).width();
+        $("#main").css("width",width+"px");
+        $(".carousel-inner img").css("width",width+"px");
+        $(".carousel-inner").css("width",width+"px");
+        $(".carousel").css("width",width+"px");
     }
 };
