@@ -87,7 +87,7 @@ h3 {
     filter: brightness(110%);
 }
 
-.fa {
+/* .fa {
     padding: 30px;
     font-size: 30px;
     width: 60;
@@ -114,7 +114,7 @@ h3 {
   
 .fa-instagram {
     color: white;
-}
+} */
 
 #web_site {
     color: rgba(255,255,255,.5);
@@ -178,4 +178,12 @@ h3 {
   /* bottom line goes back to initial position and rotates back to 0 degrees */
   .navbar-toggler span:nth-child(3) {
     transform: translate(0%, 0%) rotate(0deg) ;
+  }
+
+.page-footer ul {
+    padding:0;
+    list-style:none;
+    line-height:1.6;
+    font-size:14px;
+    margin-bottom:0;
   }
