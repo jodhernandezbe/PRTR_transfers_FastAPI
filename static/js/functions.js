@@ -18,7 +18,7 @@ function openFullscreen(id) {
 
 
 if ( window.location.pathname == '/' ){
-    if ($(window).width() >= 768){
+    if ($(window).width() > 768){
         var height = $(window).height() - ($("#header").outerHeight() + $("#footer").outerHeight());
         $("#main").css("height",height+"px");
         $(".carousel-inner img").css("height",height+"px");
@@ -30,7 +30,7 @@ if ( window.location.pathname == '/' ){
         $(".carousel-inner").css("width",width+"px");
         $(".carousel").css("width",width+"px");
     } else {
-        var height =  0.3*($("#header").outerHeight() + $("#footer").outerHeight());
+        var height =  0.4*($("#header").outerHeight() + $("#footer").outerHeight());
         $("#main").css("min-height",height+"px");
         $(".carousel-inner img").css("min-height",height+"px");
         $(".carousel-inner").css("min-height",height+"px");
