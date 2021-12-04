@@ -102,7 +102,7 @@ def get_sector_records(request: Request):
 def get_sector_records(request: Request, db: Session = Depends(get_db)):
     columns, outer_list = getting_list_of_lists(db, model.GenericSector)    
     context = {'table_title': 'Generic industry sectors',
-                'columns': [col.replace('_', ' ') for col in columns],
+                'columns': columns,
                 'record_rows': outer_list,
                 'request': request}
     return templates.TemplateResponse("table.html", context=context)    
@@ -117,7 +117,7 @@ def get_sector_records(request: Request, db: Session = Depends(get_db)):
 def get_substance_records(request: Request, db: Session = Depends(get_db)):
     columns, outer_list = getting_list_of_lists(db, model.GenericSubstance)    
     context = {'table_title': 'Generic substances',
-                'columns': [col.replace('_', ' ') for col in columns],
+                'columns': columns,
                 'record_rows': outer_list,
                 'request': request}
     return templates.TemplateResponse("table.html", context=context) 
@@ -132,7 +132,7 @@ def get_substance_records(request: Request, db: Session = Depends(get_db)):
 def get_transfer_class_records(request: Request, db: Session = Depends(get_db)):
     columns, outer_list = getting_list_of_lists(db, model.GenericTransferClass)    
     context = {'table_title': 'Generic transfer classes',
-                'columns': [col.replace('_', ' ') for col in columns],
+                'columns': columns,
                 'record_rows': outer_list,
                 'request': request}
     return templates.TemplateResponse("table.html", context=context)
