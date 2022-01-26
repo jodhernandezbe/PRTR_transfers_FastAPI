@@ -80,8 +80,20 @@ If you prefer to save the path to the PRTR_transfers_FastAPI project folder as a
 
 <hr/>
 
+# Remote deployment
+
+This was deployed at Heroku where you can also test it from the docs endpoint
+
+WebSite: https://prtr-transfers-summary.herokuapp.com/
+
+API documentation: https://prtr-transfers-summary.herokuapp.com/v1/api_documentation
+
+<hr/>
+
 # Local deployment
 
+Run the following command for local deployment
 ```
 python run.py
 ```
+Go to https://127.0.0.1:8000
