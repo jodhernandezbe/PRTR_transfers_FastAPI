@@ -82,11 +82,11 @@ If you prefer to save the path to the PRTR_transfers_FastAPI project folder as a
 
 # Remote deployment
 
-This was deployed at Heroku where you can also test it from the docs endpoint
+This was deployed at AWS where you can also test it from the docs endpoint
 
-WebSite: https://prtr-transfers-summary.herokuapp.com/
+WebSite: http://ec2-50-19-131-127.compute-1.amazonaws.com/
 
-API documentation: https://prtr-transfers-summary.herokuapp.com/v1/api_documentation
+API documentation: http://ec2-50-19-131-127.compute-1.amazonaws.com/v1/api_documentation
 
 <hr/>
 
